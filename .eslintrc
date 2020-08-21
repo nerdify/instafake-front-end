@@ -1,0 +1,13 @@
+{
+  "extends": [
+    "react-app",
+    "plugin:prettier/recommended",
+    "plugin:relay/recommended"
+  ],
+  "plugins": ["relay"],
+  "rules": {
+    "import/no-anonymous-default-export": "off",
+    "quotes": ["warn", "backtick"],
+    "relay/generated-flow-types": "off"
+  }
+}
