@@ -1,12 +1,20 @@
 import React from 'react'
-import {Button, ChakraProvider, CSSReset} from '@chakra-ui/core'
+import {BrowserRouter as Router} from 'react-router-dom'
+import {ChakraProvider, CSSReset} from '@chakra-ui/core'
 import theme from '@chakra-ui/theme'
+
+import {Header} from 'components/Header'
+import {AppRoutes} from 'pages/Route'
 
 export function App() {
   return (
-    <ChakraProvider theme={theme}>
-      <CSSReset />
-      <Button>Test</Button>
-    </ChakraProvider>
+    <Router>
+      <ChakraProvider theme={theme}>
+        <CSSReset />
+
+        <Header />
+        <AppRoutes />
+      </ChakraProvider>
+    </Router>
   )
 }
