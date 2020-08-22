@@ -1,0 +1,225 @@
+type Query {
+  post(id: ID!): Post
+  user(id: ID!): User
+  node(id: ID!): Node
+}
+
+type Post implements Node {
+  """A list of comments associated with the post."""
+  comments(
+    """Limits number of fetched elements."""
+    first: Int!
+
+    """A cursor after which elements are returned."""
+    after: String
+  ): CommentConnection
+
+  """The post's description."""
+  description: String
+  id: ID!
+
+  """User that created the post."""
+  user: User!
+}
+
+"""Node global interface"""
+interface Node {
+  """Global identifier that can be used to resolve any Node implementation."""
+  id: ID!
+}
+
+"""A paginated list of Comment edges."""
+type CommentConnection {
+  """Pagination information about the list of edges."""
+  pageInfo: PageInfo!
+
+  """A list of Comment edges."""
+  edges: [CommentEdge]
+}
+
+"""Pagination information about the corresponding list of items."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """Total number of node in connection."""
+  total: Int
+
+  """Count of nodes in current request."""
+  count: Int
+
+  """Current page of request."""
+  currentPage: Int
+
+  """Last page in connection."""
+  lastPage: Int
+}
+
+"""An edge that contains a node of type Comment and a cursor."""
+type CommentEdge {
+  """The Comment node."""
+  node: Comment
+
+  """A unique cursor that can be used for pagination."""
+  cursor: String!
+}
+
+type Comment implements Node {
+  id: ID!
+
+  """Post where the comment was created."""
+  post: Post!
+
+  """User that created the comment."""
+  user: User!
+
+  """The post's text."""
+  text: String
+}
+
+type User implements Node {
+  """The user's email address."""
+  email: String!
+
+  """The user's first name."""
+  firstName: String!
+  id: ID!
+
+  """The user's last name."""
+  lastName: String!
+
+  """The full name of the user, based on firstName and lastName."""
+  name: String!
+
+  """A list of posts associated with the user."""
+  posts(
+    """Limits number of fetched elements."""
+    first: Int!
+
+    """A cursor after which elements are returned."""
+    after: String
+  ): PostConnection
+
+  """The user's username."""
+  username: String!
+}
+
+"""A paginated list of Post edges."""
+type PostConnection {
+  """Pagination information about the list of edges."""
+  pageInfo: PageInfo!
+
+  """A list of Post edges."""
+  edges: [PostEdge]
+}
+
+"""An edge that contains a node of type Post and a cursor."""
+type PostEdge {
+  """The Post node."""
+  node: Post
+
+  """A unique cursor that can be used for pagination."""
+  cursor: String!
+}
+
+type Mutation
+
+"""Entities that can be deleted."""
+interface Deletable {
+  """Check if the current viewer can delete this object."""
+  viewerCanDelete: Boolean!
+}
+
+"""Represents a type that can be retrieved by a URL."""
+interface UniformResourceLocatable {
+  """The HTML path to this resource."""
+  resourcePath: URI!
+
+  """The URL to this resource."""
+  url: URI!
+}
+
+"""An RFC 3986 and RFC 3987 compliant URI string."""
+scalar URI
+
+"""Entities that can be updated."""
+interface Updatable {
+  """Check if the current viewer can update this object."""
+  viewerCanUpdate: Boolean!
+}
+
+"""
+An ISO-8601 encoded UTC date time string. Example value: `2019-07-03T20:47:55Z`
+"""
+scalar DateTime
+
+"""A [RFC 5321](https://tools.ietf.org/html/rfc5321) compliant email."""
+scalar Email
+
+"""The available directions for ordering a list of records."""
+enum SortOrder {
+  """Sort records in ascending order."""
+  ASC
+
+  """Sort records in descending order."""
+  DESC
+}
+
+"""Allows ordering a list of records."""
+input OrderByClause {
+  """The column that is used for ordering."""
+  column: String!
+
+  """The direction that is used for ordering."""
+  order: SortOrder!
+}
+
+"""Pagination information about the corresponding list of items."""
+type PaginatorInfo {
+  """Total count of available items in the page."""
+  count: Int!
+
+  """Current pagination page."""
+  currentPage: Int!
+
+  """Index of first item in the current page."""
+  firstItem: Int
+
+  """If collection has more pages."""
+  hasMorePages: Boolean!
+
+  """Index of last item in the current page."""
+  lastItem: Int
+
+  """Last page number of the collection."""
+  lastPage: Int!
+
+  """Number of items per page in the collection."""
+  perPage: Int!
+
+  """Total items available in the collection."""
+  total: Int!
+}
+
+"""
+Specify if you want to include or exclude trashed results from a query.
+"""
+enum Trashed {
+  """Only return trashed results."""
+  ONLY
+
+  """Return both trashed and non-trashed results."""
+  WITH
+
+  """Only return non-trashed results."""
+  WITHOUT
+}
