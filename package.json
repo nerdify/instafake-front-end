@@ -38,6 +38,7 @@
     "extract-files": "9.0.0",
     "formik": "2.1.5",
     "history": "5.0.0",
+    "lodash.set": "4.3.2",
     "pusher-js": "7.0.0",
     "react": "0.0.0-experimental-94c0244ba",
     "react-dom": "0.0.0-experimental-94c0244ba",
