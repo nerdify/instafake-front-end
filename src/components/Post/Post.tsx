@@ -61,7 +61,7 @@ export function Post() {
             <Text fontWeight="semibold">verge</Text> <Text>Sunday</Text>
           </Stack>
         </Flex>
-        <Text color="gray.400" fontSize="sm">
+        <Text color="gray.500" fontSize="sm">
           Ver los 2,713 comentarios
         </Text>
         <Box>
@@ -79,6 +79,9 @@ export function Post() {
             <FontAwesomeIcon icon={faHeart} size="xs" />
           </Flex>
         </Box>
+        <Text fontSize="xs" color="gray.500" mt={1}>
+          HACE 15 HORAS
+        </Text>
       </Box>
     </Box>
   )
