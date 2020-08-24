@@ -8,7 +8,7 @@ export function Timeline() {
   return (
     <div>
       <StoriesCard />
-      <Stack spacing={4} pt={8}>
+      <Stack spacing={12} pt={8}>
         {Array.from(Array(10).keys()).map((item) => (
           <Post key={item} />
         ))}

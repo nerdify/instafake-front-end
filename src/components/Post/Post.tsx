@@ -56,12 +56,29 @@ export function Post() {
         <Text fontSize="sm" fontWeight="semibold" pt={2}>
           10,947 Me Gusta
         </Text>
-
         <Flex>
-          <Stack isInline fontSize="sm" pt={2} spacing={1}>
+          <Stack isInline fontSize="sm" pt={1} spacing={1}>
             <Text fontWeight="semibold">verge</Text> <Text>Sunday</Text>
           </Stack>
         </Flex>
+        <Text color="gray.400" fontSize="sm">
+          Ver los 2,713 comentarios
+        </Text>
+        <Box>
+          <Flex justify="space-between" align="center">
+            <Stack isInline fontSize="sm" spacing={1}>
+              <Text fontWeight="semibold">reddit</Text> <Text>Awesome</Text>
+            </Stack>
+            <FontAwesomeIcon icon={faHeart} size="xs" />
+          </Flex>
+
+          <Flex justify="space-between" align="center">
+            <Stack isInline fontSize="sm" spacing={1}>
+              <Text fontWeight="semibold">google</Text> <Text>Pro</Text>
+            </Stack>
+            <FontAwesomeIcon icon={faHeart} size="xs" />
+          </Flex>
+        </Box>
       </Box>
     </Box>
   )
