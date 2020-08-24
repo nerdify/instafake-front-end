@@ -1,5 +1,5 @@
 import React from 'react'
-import {Avatar, Box, Flex, Text, Heading} from '@chakra-ui/core'
+import {Avatar, Box, Flex, Heading} from '@chakra-ui/core'
 import {faEllipsisH as fasEllipsisH} from '@fortawesome/pro-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
