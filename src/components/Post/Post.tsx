@@ -1,6 +1,12 @@
 import React from 'react'
-import {Avatar, Box, Flex, Heading} from '@chakra-ui/core'
+import {Avatar, Box, Flex, Heading, Stack, Text} from '@chakra-ui/core'
 import {faEllipsisH as fasEllipsisH} from '@fortawesome/pro-solid-svg-icons'
+import {
+  faHeart,
+  faComment,
+  faPaperPlane,
+  faBookmark,
+} from '@fortawesome/pro-regular-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 export function Post() {
@@ -36,6 +42,27 @@ export function Post() {
       <Flex>
         <img src="https://source.unsplash.com/random/1024x600" alt="test" />
       </Flex>
+      <Box p={4}>
+        <Flex align="center" justify="space-between">
+          <Stack spacing={2} isInline>
+            <FontAwesomeIcon icon={faHeart} size="lg" />
+            <FontAwesomeIcon icon={faComment} size="lg" />
+            <FontAwesomeIcon icon={faPaperPlane} size="lg" />
+          </Stack>
+          <Flex>
+            <FontAwesomeIcon icon={faBookmark} size="lg" />
+          </Flex>
+        </Flex>
+        <Text fontSize="sm" fontWeight="semibold" pt={2}>
+          10,947 Me Gusta
+        </Text>
+
+        <Flex>
+          <Stack isInline fontSize="sm" pt={2} spacing={1}>
+            <Text fontWeight="semibold">verge</Text> <Text>Sunday</Text>
+          </Stack>
+        </Flex>
+      </Box>
     </Box>
   )
 }
