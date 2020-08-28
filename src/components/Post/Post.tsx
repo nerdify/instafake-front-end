@@ -1,5 +1,14 @@
 import React from 'react'
-import {Avatar, Box, Flex, Heading, Stack, Text} from '@chakra-ui/core'
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Textarea,
+  Stack,
+  Text,
+} from '@chakra-ui/core'
 import {faEllipsisH as fasEllipsisH} from '@fortawesome/pro-solid-svg-icons'
 import {
   faHeart,
@@ -80,9 +89,24 @@ export function Post() {
           </Flex>
         </Box>
         <Text fontSize="xs" color="gray.500" mt={1}>
-          HACE 15 HORAS
+          zxcascxsdk HACE 15 HORAS
         </Text>
       </Box>
+      <Flex borderTop="1px solid" borderColor="gray.200" align="center">
+        <Textarea
+          p={0}
+          border={0}
+          height={2}
+          minH={6}
+          maxH="80px"
+          placeholder="Agrega un comentario"
+          resize="none"
+          variant="unstyled"
+        />
+        <Button color="blue.200" variant="link">
+          Publicar
+        </Button>
+      </Flex>
     </Box>
   )
 }
