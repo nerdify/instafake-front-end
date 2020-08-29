@@ -1,4 +1,5 @@
 import React from 'react'
+import {graphql, useFragment} from 'react-relay/hooks'
 import TextareaAutosize from 'react-textarea-autosize'
 import {
   Avatar,
@@ -19,7 +20,38 @@ import {
 } from '@fortawesome/pro-regular-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
-export function Post() {
+import {Post_post$key} from './__generated__/Post_post.graphql'
+
+import {Comment} from './components'
+
+interface PostProps {
+  post: Post_post$key
+}
+
+export function Post(props: PostProps) {
+  const post = useFragment(
+    graphql`
+      fragment Post_post on Post {
+        description
+        comments(first: 3) {
+          pageInfo {
+            total
+          }
+          edges {
+            node {
+              ...Comment_comment
+              id
+            }
+          }
+        }
+        user {
+          username
+        }
+      }
+    `,
+    props.post
+  )
+
   return (
     <Box bg="white" border="1px solid" borderColor="gray.200" borderRadius="md">
       <Flex
@@ -44,7 +76,7 @@ export function Post() {
             />
           </Box>
           <Box>
-            <Heading size="xs">verge</Heading>
+            <Heading size="xs">{post.user.username}</Heading>
             <Box fontSize="xs">location...</Box>
           </Box>
         </Stack>
@@ -69,27 +101,20 @@ export function Post() {
         </Text>
         <Flex>
           <Stack isInline fontSize="sm" pt={1} spacing={1}>
-            <Text fontWeight="semibold">verge</Text> <Text>Sunday</Text>
+            <Text fontWeight="semibold">{post.user.username}</Text>
+            <Text>{post.description}</Text>
           </Stack>
         </Flex>
-        <Text color="gray.500" fontSize="sm">
-          Ver los 2,713 comentarios
-        </Text>
-        <Box>
-          <Flex justify="space-between" align="center">
-            <Stack isInline fontSize="sm" spacing={1}>
-              <Text fontWeight="semibold">reddit</Text> <Text>Awesome</Text>
-            </Stack>
-            <FontAwesomeIcon icon={faHeart} size="xs" />
-          </Flex>
 
-          <Flex justify="space-between" align="center">
-            <Stack isInline fontSize="sm" spacing={1}>
-              <Text fontWeight="semibold">google</Text> <Text>Pro</Text>
-            </Stack>
-            <FontAwesomeIcon icon={faHeart} size="xs" />
-          </Flex>
-        </Box>
+        {post.comments.pageInfo.total > 0 && (
+          <Text color="gray.500" fontSize="sm">
+            Ver los {post.comments.pageInfo.total} comentarios
+          </Text>
+        )}
+        {post.comments.edges.map((edge) => (
+          <Comment comment={edge.node} key={edge.node.id} />
+        ))}
+
         <Text color="gray.500" fontSize="xs" mt={1} textTransform="uppercase">
           Hace 15 horas
         </Text>

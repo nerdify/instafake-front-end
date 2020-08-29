@@ -1,5 +1,12 @@
 type Query {
   post(id: ID!): Post
+  posts(
+    """Limits number of fetched elements."""
+    first: Int!
+
+    """A cursor after which elements are returned."""
+    after: String
+  ): PostConnection
   user(id: ID!): User
   node(id: ID!): Node
 }
