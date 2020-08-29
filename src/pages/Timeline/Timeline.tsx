@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {StoriesCard} from './components/StoriesCard'
+import {StoriesCard} from './components'
 
 export function Timeline() {
   return (
