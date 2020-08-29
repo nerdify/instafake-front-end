@@ -10,8 +10,7 @@ export default async function _fetch(
   const headers = {
     ...getHeaders(uploadables),
   }
-
-  const response = await fetch(process.env.GRAPHQL_ENDPOINT, {
+  const response = await fetch(process.env.REACT_APP_GRAPHQL_ENDPOINT, {
     body,
     headers,
     method: `POST`,
