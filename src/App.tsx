@@ -1,20 +1,25 @@
 import React from 'react'
+import {RelayEnvironmentProvider} from 'react-relay/hooks'
 import {BrowserRouter as Router} from 'react-router-dom'
 import {ChakraProvider, CSSReset} from '@chakra-ui/core'
 import theme from '@chakra-ui/theme'
 
-import {Header} from 'components/Header'
+import relayEnvironment from 'relay/environment'
+
+import {Header} from 'components'
 import {AppRoutes} from 'pages/Route'
 
 export function App() {
   return (
-    <Router>
-      <ChakraProvider theme={theme}>
-        <CSSReset />
+    <RelayEnvironmentProvider environment={relayEnvironment}>
+      <Router>
+        <ChakraProvider theme={theme}>
+          <CSSReset />
 
-        <Header />
-        <AppRoutes />
-      </ChakraProvider>
-    </Router>
+          <Header />
+          <AppRoutes />
+        </ChakraProvider>
+      </Router>
+    </RelayEnvironmentProvider>
   )
 }

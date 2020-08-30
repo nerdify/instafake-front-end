@@ -8,7 +8,7 @@ const {
 const path = require(`path`)
 
 function getRemoteSchema() {
-  return fetch(process.env.GRAPHQL_ENDPOINT, {
+  return fetch(process.env.REACT_APP_GRAPHQL_ENDPOINT, {
     body: JSON.stringify({query: getIntrospectionQuery()}),
     headers: {'Content-Type': `application/json`},
     method: `POST`,

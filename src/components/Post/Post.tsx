@@ -1,4 +1,6 @@
 import React from 'react'
+import {graphql, useFragment} from 'react-relay/hooks'
+import TextareaAutosize from 'react-textarea-autosize'
 import {
   Avatar,
   Box,
@@ -9,7 +11,7 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/core'
-import {faEllipsisH as fasEllipsisH} from '@fortawesome/pro-solid-svg-icons'
+import {faEllipsisH as falEllipsisH} from '@fortawesome/pro-light-svg-icons'
 import {
   faHeart,
   faComment,
@@ -18,7 +20,38 @@ import {
 } from '@fortawesome/pro-regular-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
-export function Post() {
+import {Post_post$key} from './__generated__/Post_post.graphql'
+
+import {Comment} from './components'
+
+interface PostProps {
+  post: Post_post$key
+}
+
+export function Post(props: PostProps) {
+  const post = useFragment(
+    graphql`
+      fragment Post_post on Post {
+        description
+        comments(first: 3) {
+          pageInfo {
+            total
+          }
+          edges {
+            node {
+              ...Comment_comment
+              id
+            }
+          }
+        }
+        user {
+          username
+        }
+      }
+    `,
+    props.post
+  )
+
   return (
     <Box bg="white" border="1px solid" borderColor="gray.200" borderRadius="md">
       <Flex
@@ -29,7 +62,7 @@ export function Post() {
         borderBottom="1px solid"
         borderColor="gray.200"
       >
-        <Flex align="center">
+        <Stack isInline align="center">
           <Box
             border="1px solid"
             borderColor="gray.200"
@@ -42,18 +75,19 @@ export function Post() {
               src="https://images.unsplash.com/photo-1577565177023-d0f29c354b69?fit=crop&h=64&w=64&q=80"
             />
           </Box>
-          <Heading size="xs" ml={2}>
-            verge
-          </Heading>
-        </Flex>
-        <FontAwesomeIcon icon={fasEllipsisH}></FontAwesomeIcon>
+          <Box>
+            <Heading size="xs">{post.user.username}</Heading>
+            <Box fontSize="xs">location...</Box>
+          </Box>
+        </Stack>
+        <FontAwesomeIcon icon={falEllipsisH} size="2x" />
       </Flex>
       <Flex>
         <img src="https://source.unsplash.com/random/1024x600" alt="test" />
       </Flex>
       <Box p={4}>
         <Flex align="center" justify="space-between">
-          <Stack spacing={2} isInline>
+          <Stack isInline spacing={4}>
             <FontAwesomeIcon icon={faHeart} size="lg" />
             <FontAwesomeIcon icon={faComment} size="lg" />
             <FontAwesomeIcon icon={faPaperPlane} size="lg" />
@@ -67,43 +101,44 @@ export function Post() {
         </Text>
         <Flex>
           <Stack isInline fontSize="sm" pt={1} spacing={1}>
-            <Text fontWeight="semibold">verge</Text> <Text>Sunday</Text>
+            <Text fontWeight="semibold">{post.user.username}</Text>
+            <Text>{post.description}</Text>
           </Stack>
         </Flex>
-        <Text color="gray.500" fontSize="sm">
-          Ver los 2,713 comentarios
-        </Text>
-        <Box>
-          <Flex justify="space-between" align="center">
-            <Stack isInline fontSize="sm" spacing={1}>
-              <Text fontWeight="semibold">reddit</Text> <Text>Awesome</Text>
-            </Stack>
-            <FontAwesomeIcon icon={faHeart} size="xs" />
-          </Flex>
 
-          <Flex justify="space-between" align="center">
-            <Stack isInline fontSize="sm" spacing={1}>
-              <Text fontWeight="semibold">google</Text> <Text>Pro</Text>
-            </Stack>
-            <FontAwesomeIcon icon={faHeart} size="xs" />
-          </Flex>
-        </Box>
-        <Text fontSize="xs" color="gray.500" mt={1}>
-          zxcascxsdk HACE 15 HORAS
+        {post.comments.pageInfo.total > 0 && (
+          <Text color="gray.500" fontSize="sm">
+            Ver los {post.comments.pageInfo.total} comentarios
+          </Text>
+        )}
+        {post.comments.edges.map((edge) => (
+          <Comment comment={edge.node} key={edge.node.id} />
+        ))}
+
+        <Text color="gray.500" fontSize="xs" mt={1} textTransform="uppercase">
+          Hace 15 horas
         </Text>
       </Box>
-      <Flex borderTop="1px solid" borderColor="gray.200" align="center">
+      <Flex align="center" borderTop="1px solid" borderColor="gray.200">
         <Textarea
-          p={0}
+          as={TextareaAutosize}
           border={0}
-          height={2}
-          minH={6}
           maxH="80px"
+          minH={6}
+          p={4}
           placeholder="Agrega un comentario"
           resize="none"
           variant="unstyled"
         />
-        <Button color="blue.200" variant="link">
+        <Button
+          color="blue.200"
+          fontSize="sm"
+          p={4}
+          variant="link"
+          _hover={{
+            textDecoration: `none`,
+          }}
+        >
           Publicar
         </Button>
       </Flex>

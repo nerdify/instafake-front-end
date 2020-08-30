@@ -1,18 +1,36 @@
 import React from 'react'
-
-import {StoriesCard} from './components/StoriesCard'
-import {Post} from '../../components/Post'
+import {graphql, useLazyLoadQuery} from 'react-relay/hooks'
 import {Stack} from '@chakra-ui/core'
 
+import {TimelinePostsQuery} from './__generated__/TimelinePostsQuery.graphql'
+
+import {Post} from 'components'
+import {StoriesCard} from './components'
+
 export function Timeline() {
+  const {posts} = useLazyLoadQuery<TimelinePostsQuery>(
+    graphql`
+      query TimelinePostsQuery {
+        posts(first: 1) {
+          edges {
+            node {
+              ...Post_post
+              id
+            }
+          }
+        }
+      }
+    `,
+    {}
+  )
+
   return (
-    <div>
+    <Stack spacing={4} pb={4}>
       <StoriesCard />
-      <Stack spacing={12} pt={8}>
-        {Array.from(Array(10).keys()).map((item) => (
-          <Post key={item} />
-        ))}
-      </Stack>
-    </div>
+
+      {posts.edges.map((edge) => {
+        return <Post key={edge.node.id} post={edge.node} />
+      })}
+    </Stack>
   )
 }
