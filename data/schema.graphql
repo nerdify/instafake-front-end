@@ -138,7 +138,20 @@ type PostEdge {
   cursor: String!
 }
 
-type Mutation
+type Mutation {
+  createComment(input: CreateCommentInput!): CreateCommentPayload
+}
+
+input CreateCommentInput {
+  postId: ID!
+  text: String!
+  userId: ID!
+}
+
+type CreateCommentPayload {
+  commentEdge: CommentEdge!
+  parent: Comment
+}
 
 """Entities that can be deleted."""
 interface Deletable {

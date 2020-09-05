@@ -44,15 +44,20 @@ fragment Comment_comment on Comment {
 
 fragment Post_post on Post {
   description
+  id
   comments(first: 3) {
     pageInfo {
       total
+      endCursor
+      hasNextPage
     }
     edges {
       node {
         ...Comment_comment
         id
+        __typename
       }
+      cursor
     }
   }
   user {
@@ -77,7 +82,14 @@ v1 = {
   "name": "id",
   "storageKey": null
 },
-v2 = {
+v2 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 3
+  }
+],
+v3 = {
   "alias": null,
   "args": null,
   "concreteType": "User",
@@ -183,15 +195,10 @@ return {
                     "name": "description",
                     "storageKey": null
                   },
+                  (v1/*: any*/),
                   {
                     "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "first",
-                        "value": 3
-                      }
-                    ],
+                    "args": (v2/*: any*/),
                     "concreteType": "CommentConnection",
                     "kind": "LinkedField",
                     "name": "comments",
@@ -210,6 +217,20 @@ return {
                             "args": null,
                             "kind": "ScalarField",
                             "name": "total",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "endCursor",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "hasNextPage",
                             "storageKey": null
                           }
                         ],
@@ -238,9 +259,23 @@ return {
                                 "name": "text",
                                 "storageKey": null
                               },
-                              (v2/*: any*/),
-                              (v1/*: any*/)
+                              (v3/*: any*/),
+                              (v1/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "__typename",
+                                "storageKey": null
+                              }
                             ],
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "cursor",
                             "storageKey": null
                           }
                         ],
@@ -249,8 +284,16 @@ return {
                     ],
                     "storageKey": "comments(first:3)"
                   },
-                  (v2/*: any*/),
-                  (v1/*: any*/)
+                  {
+                    "alias": null,
+                    "args": (v2/*: any*/),
+                    "filters": null,
+                    "handle": "connection",
+                    "key": "Post_comments",
+                    "kind": "LinkedHandle",
+                    "name": "comments"
+                  },
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -263,12 +306,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "645ec7b5923e923cb3ba3d27343ad6b3",
+    "cacheID": "e41c5065d7267193f64c630ff5f8ae96",
     "id": null,
     "metadata": {},
     "name": "TimelinePostsQuery",
     "operationKind": "query",
-    "text": "query TimelinePostsQuery {\n  posts(first: 1) {\n    edges {\n      node {\n        ...Post_post\n        id\n      }\n    }\n  }\n}\n\nfragment Comment_comment on Comment {\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Post_post on Post {\n  description\n  comments(first: 3) {\n    pageInfo {\n      total\n    }\n    edges {\n      node {\n        ...Comment_comment\n        id\n      }\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
+    "text": "query TimelinePostsQuery {\n  posts(first: 1) {\n    edges {\n      node {\n        ...Post_post\n        id\n      }\n    }\n  }\n}\n\nfragment Comment_comment on Comment {\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Post_post on Post {\n  description\n  id\n  comments(first: 3) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...Comment_comment\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
   }
 };
 })();

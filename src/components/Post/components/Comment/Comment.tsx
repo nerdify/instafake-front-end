@@ -25,7 +25,9 @@ export function Comment(props: CommentProps) {
     props.comment
   )
 
-  const [isTruncated, setIsTruncated] = useState(true)
+  const [isTruncated, setIsTruncated] = useState(
+    comment.text.length > COMMENT_TEXT_LENGTH
+  )
   const textTruncated = useMemo(() => {
     return `${comment.text.slice(0, COMMENT_TEXT_LENGTH)}...`
   }, [comment.text])
