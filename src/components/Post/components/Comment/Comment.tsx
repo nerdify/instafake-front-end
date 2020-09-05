@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
-import {Box, Flex, Stack, Text} from '@chakra-ui/core'
+import {Box, Stack, Text} from '@chakra-ui/core'
 import {faHeart} from '@fortawesome/pro-regular-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
