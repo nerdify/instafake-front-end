@@ -6,6 +6,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Post_post = {
     readonly description: string | null;
+    readonly id: string;
     readonly comments: {
         readonly pageInfo: {
             readonly total: number | null;
@@ -30,10 +31,29 @@ export type Post_post$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": null,
+        "cursor": null,
+        "direction": "forward",
+        "path": [
+          "comments"
+        ]
+      }
+    ]
+  },
   "name": "Post_post",
   "selections": [
     {
@@ -43,18 +63,13 @@ const node: ReaderFragment = {
       "name": "description",
       "storageKey": null
     },
+    (v0/*: any*/),
     {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 3
-        }
-      ],
+      "alias": "comments",
+      "args": null,
       "concreteType": "CommentConnection",
       "kind": "LinkedField",
-      "name": "comments",
+      "name": "__Post_comments_connection",
       "plural": false,
       "selections": [
         {
@@ -70,6 +85,20 @@ const node: ReaderFragment = {
               "args": null,
               "kind": "ScalarField",
               "name": "total",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
               "storageKey": null
             }
           ],
@@ -91,11 +120,12 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "id",
+                  "name": "__typename",
                   "storageKey": null
                 },
                 {
@@ -105,12 +135,19 @@ const node: ReaderFragment = {
                 }
               ],
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
             }
           ],
           "storageKey": null
         }
       ],
-      "storageKey": "comments(first:3)"
+      "storageKey": null
     },
     {
       "alias": null,
@@ -134,5 +171,6 @@ const node: ReaderFragment = {
   "type": "Post",
   "abstractKey": null
 };
-(node as any).hash = '377359537b7230f0d45eb10ed76e465e';
+})();
+(node as any).hash = 'c86a49990181a4b4ba9971b416f7111b';
 export default node;

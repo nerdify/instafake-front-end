@@ -1,13 +1,16 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
+import {useMutation} from 'react-relay-mutation'
 import TextareaAutosize from 'react-textarea-autosize'
 import {
   Avatar,
   Box,
   Button,
+  Center,
   Flex,
   Heading,
   Textarea,
+  Spinner,
   Stack,
   Text,
 } from '@chakra-ui/core'
@@ -21,6 +24,7 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import {Post_post$key} from './__generated__/Post_post.graphql'
+import {PostCreateCommentMutation} from './__generated__/PostCreateCommentMutation.graphql'
 
 import {Comment} from './components'
 
@@ -29,11 +33,13 @@ interface PostProps {
 }
 
 export function Post(props: PostProps) {
+  const [textareaValue, setTextareaValue] = useState(``)
   const post = useFragment(
     graphql`
       fragment Post_post on Post {
         description
-        comments(first: 3) {
+        id
+        comments(first: 3) @connection(key: "Post_comments") {
           pageInfo {
             total
           }
@@ -51,6 +57,50 @@ export function Post(props: PostProps) {
     `,
     props.post
   )
+  const [createCommentCommit, {loading}] = useMutation<
+    PostCreateCommentMutation
+  >(graphql`
+    mutation PostCreateCommentMutation($input: CreateCommentInput!) {
+      createComment(input: $input) {
+        commentEdge {
+          node {
+            text
+            user {
+              username
+            }
+          }
+        }
+      }
+    }
+  `)
+
+  function handleSubmitComment() {
+    createCommentCommit({
+      variables: {
+        input: {
+          postId: `UG9zdDoxCg==`,
+          text: textareaValue,
+          userId: `VXNlcjoxCg==`,
+        },
+      },
+      configs: [
+        {
+          edgeName: `commentEdge`,
+          parentID: post.id,
+          type: `RANGE_ADD`,
+          connectionInfo: [
+            {
+              key: `Post_comments`,
+              rangeBehavior: `append`,
+            },
+          ],
+        },
+      ],
+      onCompleted: () => {
+        setTextareaValue(``)
+      },
+    })
+  }
 
   return (
     <Box bg="white" border="1px solid" borderColor="gray.200" borderRadius="md">
@@ -119,7 +169,12 @@ export function Post(props: PostProps) {
           Hace 15 horas
         </Text>
       </Box>
-      <Flex align="center" borderTop="1px solid" borderColor="gray.200">
+      <Flex
+        align="center"
+        borderTop="1px solid"
+        borderColor="gray.200"
+        position="relative"
+      >
         <Textarea
           as={TextareaAutosize}
           border={0}
@@ -127,12 +182,16 @@ export function Post(props: PostProps) {
           minH={6}
           p={4}
           placeholder="Agrega un comentario"
+          onChange={(e) => setTextareaValue(e.target.value)}
           resize="none"
+          value={textareaValue}
           variant="unstyled"
         />
         <Button
           color="blue.200"
           fontSize="sm"
+          isDisabled={textareaValue.trim().length === 0}
+          onClick={handleSubmitComment}
           p={4}
           variant="link"
           _hover={{
@@ -141,6 +200,18 @@ export function Post(props: PostProps) {
         >
           Publicar
         </Button>
+        {loading && (
+          <Center
+            bg="whiteAlpha.500"
+            bottom={0}
+            left={0}
+            position="absolute"
+            right={0}
+            top={0}
+          >
+            <Spinner />
+          </Center>
+        )}
       </Flex>
     </Box>
   )

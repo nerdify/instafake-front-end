@@ -27,6 +27,14 @@ export type Scalars = {
 
 
 
+export type CreateCommentInput = {
+  postId: Scalars['ID'];
+  text: Scalars['String'];
+  userId: Scalars['ID'];
+};
+
+
+
 
 
 /** The available directions for ordering a list of records. */

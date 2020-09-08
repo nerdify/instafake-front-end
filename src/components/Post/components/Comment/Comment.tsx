@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
-import {Box, Flex, Stack, Text} from '@chakra-ui/core'
+import {Box, Stack, Text} from '@chakra-ui/core'
 import {faHeart} from '@fortawesome/pro-regular-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
@@ -25,7 +25,9 @@ export function Comment(props: CommentProps) {
     props.comment
   )
 
-  const [isTruncated, setIsTruncated] = useState(true)
+  const [isTruncated, setIsTruncated] = useState(
+    comment.text.length > COMMENT_TEXT_LENGTH
+  )
   const textTruncated = useMemo(() => {
     return `${comment.text.slice(0, COMMENT_TEXT_LENGTH)}...`
   }, [comment.text])
