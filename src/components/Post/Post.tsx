@@ -40,7 +40,7 @@ export function Post(props: PostProps) {
         description
         id
         comments(first: 3, orderBy: {column: CREATED_AT, order: DESC})
-        @connection(key: "Post_comments") {
+        @connection(filters: [], key: "Post_comments") {
           pageInfo {
             total
           }
@@ -70,6 +70,7 @@ export function Post(props: PostProps) {
       createComment(input: $input) {
         commentEdge {
           node {
+            ...LikeButton_subject
             text
             user {
               username
@@ -97,7 +98,7 @@ export function Post(props: PostProps) {
           connectionInfo: [
             {
               key: `Post_comments`,
-              rangeBehavior: `append`,
+              rangeBehavior: `prepend`,
             },
           ],
         },

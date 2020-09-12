@@ -79,16 +79,7 @@ return {
     (v0/*: any*/),
     {
       "alias": "comments",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "orderBy",
-          "value": {
-            "column": "CREATED_AT",
-            "order": "DESC"
-          }
-        }
-      ],
+      "args": null,
       "concreteType": "CommentConnection",
       "kind": "LinkedField",
       "name": "__Post_comments_connection",
@@ -163,7 +154,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "__Post_comments_connection(orderBy:{\"column\":\"CREATED_AT\",\"order\":\"DESC\"})"
+      "storageKey": null
     },
     {
       "alias": null,
@@ -222,5 +213,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '14f80312f1bc023264702c89acfa032b';
+(node as any).hash = 'ac35f52cc0fe243e6c85dfd37e087ec3';
 export default node;

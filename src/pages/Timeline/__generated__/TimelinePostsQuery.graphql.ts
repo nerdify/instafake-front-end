@@ -367,9 +367,7 @@ return {
                   {
                     "alias": null,
                     "args": (v2/*: any*/),
-                    "filters": [
-                      "orderBy"
-                    ],
+                    "filters": [],
                     "handle": "connection",
                     "key": "Post_comments",
                     "kind": "LinkedHandle",
