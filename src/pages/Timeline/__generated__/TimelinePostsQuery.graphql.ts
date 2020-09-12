@@ -45,7 +45,7 @@ fragment Comment_comment on Comment {
 fragment Post_post on Post {
   description
   id
-  comments(first: 3) {
+  comments(first: 3, orderBy: {column: CREATED_AT, order: DESC}) {
     pageInfo {
       total
       endCursor
@@ -87,6 +87,14 @@ v2 = [
     "kind": "Literal",
     "name": "first",
     "value": 3
+  },
+  {
+    "kind": "Literal",
+    "name": "orderBy",
+    "value": {
+      "column": "CREATED_AT",
+      "order": "DESC"
+    }
   }
 ],
 v3 = {
@@ -282,12 +290,14 @@ return {
                         "storageKey": null
                       }
                     ],
-                    "storageKey": "comments(first:3)"
+                    "storageKey": "comments(first:3,orderBy:{\"column\":\"CREATED_AT\",\"order\":\"DESC\"})"
                   },
                   {
                     "alias": null,
                     "args": (v2/*: any*/),
-                    "filters": null,
+                    "filters": [
+                      "orderBy"
+                    ],
                     "handle": "connection",
                     "key": "Post_comments",
                     "kind": "LinkedHandle",
@@ -306,12 +316,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e41c5065d7267193f64c630ff5f8ae96",
+    "cacheID": "b31e1e48f849529d83d5b3aa66800639",
     "id": null,
     "metadata": {},
     "name": "TimelinePostsQuery",
     "operationKind": "query",
-    "text": "query TimelinePostsQuery {\n  posts(first: 1) {\n    edges {\n      node {\n        ...Post_post\n        id\n      }\n    }\n  }\n}\n\nfragment Comment_comment on Comment {\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Post_post on Post {\n  description\n  id\n  comments(first: 3) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...Comment_comment\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
+    "text": "query TimelinePostsQuery {\n  posts(first: 1) {\n    edges {\n      node {\n        ...Post_post\n        id\n      }\n    }\n  }\n}\n\nfragment Comment_comment on Comment {\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Post_post on Post {\n  description\n  id\n  comments(first: 3, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...Comment_comment\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
   }
 };
 })();

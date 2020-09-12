@@ -27,10 +27,19 @@ export type Scalars = {
 
 
 
+
+
+
+
 export type CreateCommentInput = {
   postId: Scalars['ID'];
   text: Scalars['String'];
   userId: Scalars['ID'];
+};
+
+
+export type AddLikeInput = {
+  subjectId: Scalars['ID'];
 };
 
 
