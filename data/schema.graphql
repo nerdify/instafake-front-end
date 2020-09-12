@@ -14,6 +14,8 @@ type Query {
 type Post implements Node {
   """A list of comments associated with the post."""
   comments(
+    orderBy: [PostCommentsOrderByOrderByClause!]
+
     """Limits number of fetched elements."""
     first: Int!
 
@@ -25,6 +27,15 @@ type Post implements Node {
   description: String
   id: ID!
 
+  """A list of likes associated with the comment."""
+  likes(
+    """Limits number of fetched elements."""
+    first: Int!
+
+    """A cursor after which elements are returned."""
+    after: String
+  ): LikeConnection
+
   """User that created the post."""
   user: User!
 }
@@ -33,6 +44,28 @@ type Post implements Node {
 interface Node {
   """Global identifier that can be used to resolve any Node implementation."""
   id: ID!
+}
+
+"""Order by clause for the `orderBy` argument on the query `comments`."""
+input PostCommentsOrderByOrderByClause {
+  """The column that is used for ordering."""
+  column: PostCommentsFields!
+
+  """The direction that is used for ordering."""
+  order: SortOrder!
+}
+
+enum PostCommentsFields {
+  CREATED_AT
+}
+
+"""The available directions for ordering a list of records."""
+enum SortOrder {
+  """Sort records in ascending order."""
+  ASC
+
+  """Sort records in descending order."""
+  DESC
 }
 
 """A paginated list of Comment edges."""
@@ -83,6 +116,15 @@ type CommentEdge {
 type Comment implements Node {
   id: ID!
 
+  """A list of likes associated with the comment."""
+  likes(
+    """Limits number of fetched elements."""
+    first: Int!
+
+    """A cursor after which elements are returned."""
+    after: String
+  ): LikeConnection
+
   """Post where the comment was created."""
   post: Post!
 
@@ -92,6 +134,36 @@ type Comment implements Node {
   """The post's text."""
   text: String
 }
+
+"""A paginated list of Like edges."""
+type LikeConnection {
+  """Pagination information about the list of edges."""
+  pageInfo: PageInfo!
+
+  """A list of Like edges."""
+  edges: [LikeEdge]
+}
+
+"""An edge that contains a node of type Like and a cursor."""
+type LikeEdge {
+  """The Like node."""
+  node: Like
+
+  """A unique cursor that can be used for pagination."""
+  cursor: String!
+}
+
+type Like implements Node {
+  id: ID!
+
+  """"""
+  likeable: Likeable!
+
+  """User that created the like."""
+  user: User!
+}
+
+union Likeable = Comment | Post
 
 type User implements Node {
   """The user's email address."""
@@ -140,6 +212,7 @@ type PostEdge {
 
 type Mutation {
   createComment(input: CreateCommentInput!): CreateCommentPayload
+  addLike(input: AddLikeInput!): AddLikePayload
 }
 
 input CreateCommentInput {
@@ -151,6 +224,15 @@ input CreateCommentInput {
 type CreateCommentPayload {
   commentEdge: CommentEdge!
   parent: Comment
+}
+
+input AddLikeInput {
+  subjectId: ID!
+}
+
+type AddLikePayload {
+  like: Like!
+  subject: Likeable!
 }
 
 """Entities that can be deleted."""
@@ -184,15 +266,6 @@ scalar DateTime
 
 """A [RFC 5321](https://tools.ietf.org/html/rfc5321) compliant email."""
 scalar Email
-
-"""The available directions for ordering a list of records."""
-enum SortOrder {
-  """Sort records in ascending order."""
-  ASC
-
-  """Sort records in descending order."""
-  DESC
-}
 
 """Allows ordering a list of records."""
 input OrderByClause {

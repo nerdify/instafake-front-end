@@ -39,7 +39,8 @@ export function Post(props: PostProps) {
       fragment Post_post on Post {
         description
         id
-        comments(first: 3) @connection(key: "Post_comments") {
+        comments(first: 3, orderBy: {column: CREATED_AT, order: DESC})
+        @connection(key: "Post_comments") {
           pageInfo {
             total
           }
@@ -161,9 +162,9 @@ export function Post(props: PostProps) {
             Ver los {post.comments.pageInfo.total} comentarios
           </Text>
         )}
-        {post.comments.edges.map((edge) => (
-          <Comment comment={edge.node} key={edge.node.id} />
-        ))}
+        {post.comments.edges
+          .map((edge) => <Comment comment={edge.node} key={edge.node.id} />)
+          .reverse()}
 
         <Text color="gray.500" fontSize="xs" mt={1} textTransform="uppercase">
           Hace 15 horas
