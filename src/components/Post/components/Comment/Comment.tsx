@@ -1,10 +1,10 @@
 import React, {useMemo, useState} from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
 import {Box, Stack, Text} from '@chakra-ui/core'
-import {faHeart} from '@fortawesome/pro-regular-svg-icons'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import {Comment_comment$key} from './__generated__/Comment_comment.graphql'
+
+import {LikeButton} from '..'
 
 interface CommentProps {
   comment: Comment_comment$key
@@ -16,6 +16,7 @@ export function Comment(props: CommentProps) {
   const comment = useFragment(
     graphql`
       fragment Comment_comment on Comment {
+        ...LikeButton_subject
         text
         user {
           username
@@ -47,7 +48,7 @@ export function Comment(props: CommentProps) {
         </Text>
         {isTruncated && <button onClick={handleClick}>más</button>}
       </Box>
-      <FontAwesomeIcon icon={faHeart} size="xs" />
+      <LikeButton subject={comment} size="xs" />
     </Stack>
   )
 }

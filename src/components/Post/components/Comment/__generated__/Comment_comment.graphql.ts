@@ -9,6 +9,7 @@ export type Comment_comment = {
     readonly user: {
         readonly username: string;
     };
+    readonly " $fragmentRefs": FragmentRefs<"LikeButton_subject">;
     readonly " $refType": "Comment_comment";
 };
 export type Comment_comment$data = Comment_comment;
@@ -49,10 +50,15 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "LikeButton_subject"
     }
   ],
   "type": "Comment",
   "abstractKey": null
 };
-(node as any).hash = 'a7febbb377da08b006ccdd01f8fa25df';
+(node as any).hash = 'b592fb9a2a6663bc79507c1c4faae0b9';
 export default node;

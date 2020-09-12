@@ -11,7 +11,7 @@ type Query {
   node(id: ID!): Node
 }
 
-type Post implements Node {
+type Post implements Likeable & Node {
   """A list of comments associated with the post."""
   comments(
     orderBy: [PostCommentsOrderByOrderByClause!]
@@ -27,7 +27,7 @@ type Post implements Node {
   description: String
   id: ID!
 
-  """A list of likes associated with the comment."""
+  """A list of likes associated with the post."""
   likes(
     """Limits number of fetched elements."""
     first: Int!
@@ -38,119 +38,21 @@ type Post implements Node {
 
   """User that created the post."""
   user: User!
+
+  """
+  Returns a boolean indicating whether the viewing user has liked this post.
+  """
+  viewerHasLiked: Boolean!
 }
 
-"""Node global interface"""
-interface Node {
-  """Global identifier that can be used to resolve any Node implementation."""
-  id: ID!
-}
+interface Likeable {
+  """A list of likes associated with the likeable."""
+  likes: [Like!]!
 
-"""Order by clause for the `orderBy` argument on the query `comments`."""
-input PostCommentsOrderByOrderByClause {
-  """The column that is used for ordering."""
-  column: PostCommentsFields!
-
-  """The direction that is used for ordering."""
-  order: SortOrder!
-}
-
-enum PostCommentsFields {
-  CREATED_AT
-}
-
-"""The available directions for ordering a list of records."""
-enum SortOrder {
-  """Sort records in ascending order."""
-  ASC
-
-  """Sort records in descending order."""
-  DESC
-}
-
-"""A paginated list of Comment edges."""
-type CommentConnection {
-  """Pagination information about the list of edges."""
-  pageInfo: PageInfo!
-
-  """A list of Comment edges."""
-  edges: [CommentEdge]
-}
-
-"""Pagination information about the corresponding list of items."""
-type PageInfo {
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
-  """When paginating backwards, the cursor to continue."""
-  startCursor: String
-
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
-
-  """Total number of node in connection."""
-  total: Int
-
-  """Count of nodes in current request."""
-  count: Int
-
-  """Current page of request."""
-  currentPage: Int
-
-  """Last page in connection."""
-  lastPage: Int
-}
-
-"""An edge that contains a node of type Comment and a cursor."""
-type CommentEdge {
-  """The Comment node."""
-  node: Comment
-
-  """A unique cursor that can be used for pagination."""
-  cursor: String!
-}
-
-type Comment implements Node {
-  id: ID!
-
-  """A list of likes associated with the comment."""
-  likes(
-    """Limits number of fetched elements."""
-    first: Int!
-
-    """A cursor after which elements are returned."""
-    after: String
-  ): LikeConnection
-
-  """Post where the comment was created."""
-  post: Post!
-
-  """User that created the comment."""
-  user: User!
-
-  """The post's text."""
-  text: String
-}
-
-"""A paginated list of Like edges."""
-type LikeConnection {
-  """Pagination information about the list of edges."""
-  pageInfo: PageInfo!
-
-  """A list of Like edges."""
-  edges: [LikeEdge]
-}
-
-"""An edge that contains a node of type Like and a cursor."""
-type LikeEdge {
-  """The Like node."""
-  node: Like
-
-  """A unique cursor that can be used for pagination."""
-  cursor: String!
+  """
+  Returns a boolean indicating whether the viewing user has liked this likeable.
+  """
+  viewerHasLiked: Boolean!
 }
 
 type Like implements Node {
@@ -163,7 +65,11 @@ type Like implements Node {
   user: User!
 }
 
-union Likeable = Comment | Post
+"""Node global interface"""
+interface Node {
+  """Global identifier that can be used to resolve any Node implementation."""
+  id: ID!
+}
 
 type User implements Node {
   """The user's email address."""
@@ -201,10 +107,122 @@ type PostConnection {
   edges: [PostEdge]
 }
 
+"""Pagination information about the corresponding list of items."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+
+  """Total number of node in connection."""
+  total: Int
+
+  """Count of nodes in current request."""
+  count: Int
+
+  """Current page of request."""
+  currentPage: Int
+
+  """Last page in connection."""
+  lastPage: Int
+}
+
 """An edge that contains a node of type Post and a cursor."""
 type PostEdge {
   """The Post node."""
   node: Post
+
+  """A unique cursor that can be used for pagination."""
+  cursor: String!
+}
+
+"""Order by clause for the `orderBy` argument on the query `comments`."""
+input PostCommentsOrderByOrderByClause {
+  """The column that is used for ordering."""
+  column: PostCommentsFields!
+
+  """The direction that is used for ordering."""
+  order: SortOrder!
+}
+
+enum PostCommentsFields {
+  CREATED_AT
+}
+
+"""The available directions for ordering a list of records."""
+enum SortOrder {
+  """Sort records in ascending order."""
+  ASC
+
+  """Sort records in descending order."""
+  DESC
+}
+
+"""A paginated list of Comment edges."""
+type CommentConnection {
+  """Pagination information about the list of edges."""
+  pageInfo: PageInfo!
+
+  """A list of Comment edges."""
+  edges: [CommentEdge]
+}
+
+"""An edge that contains a node of type Comment and a cursor."""
+type CommentEdge {
+  """The Comment node."""
+  node: Comment
+
+  """A unique cursor that can be used for pagination."""
+  cursor: String!
+}
+
+type Comment implements Likeable & Node {
+  id: ID!
+
+  """A list of likes associated with the comment."""
+  likes(
+    """Limits number of fetched elements."""
+    first: Int!
+
+    """A cursor after which elements are returned."""
+    after: String
+  ): LikeConnection
+
+  """Post where the comment was created."""
+  post: Post!
+
+  """User that created the comment."""
+  user: User!
+
+  """The post's text."""
+  text: String
+
+  """
+  Returns a boolean indicating whether the viewing user has liked this comment.
+  """
+  viewerHasLiked: Boolean!
+}
+
+"""A paginated list of Like edges."""
+type LikeConnection {
+  """Pagination information about the list of edges."""
+  pageInfo: PageInfo!
+
+  """A list of Like edges."""
+  edges: [LikeEdge]
+}
+
+"""An edge that contains a node of type Like and a cursor."""
+type LikeEdge {
+  """The Like node."""
+  node: Like
 
   """A unique cursor that can be used for pagination."""
   cursor: String!

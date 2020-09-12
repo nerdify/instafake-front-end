@@ -20,6 +20,26 @@ export type Scalars = {
 
 
 
+/** Order by clause for the `orderBy` argument on the query `comments`. */
+export type PostCommentsOrderByOrderByClause = {
+  /** The column that is used for ordering. */
+  column: PostCommentsFields;
+  /** The direction that is used for ordering. */
+  order: SortOrder;
+};
+
+export enum PostCommentsFields {
+  CREATED_AT = 'CREATED_AT'
+}
+
+/** The available directions for ordering a list of records. */
+export enum SortOrder {
+  /** Sort records in ascending order. */
+  ASC = 'ASC',
+  /** Sort records in descending order. */
+  DESC = 'DESC'
+}
+
 
 
 
@@ -45,14 +65,6 @@ export type AddLikeInput = {
 
 
 
-
-/** The available directions for ordering a list of records. */
-export enum SortOrder {
-  /** Sort records in ascending order. */
-  ASC = 'ASC',
-  /** Sort records in descending order. */
-  DESC = 'DESC'
-}
 
 /** Allows ordering a list of records. */
 export type OrderByClause = {
