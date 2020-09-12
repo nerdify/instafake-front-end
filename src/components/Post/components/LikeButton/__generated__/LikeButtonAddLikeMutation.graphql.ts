@@ -15,6 +15,11 @@ export type LikeButtonAddLikeMutationResponse = {
             readonly __typename: string;
             readonly viewerHasLiked: boolean;
             readonly id?: string;
+            readonly likes?: {
+                readonly pageInfo: {
+                    readonly total: number | null;
+                };
+            } | null;
         };
     } | null;
 };
@@ -38,6 +43,11 @@ mutation LikeButtonAddLikeMutation(
       }
       ... on Post {
         id
+        likes(first: 1) {
+          pageInfo {
+            total
+          }
+        }
       }
       ... on Node {
         __isNode: __typename
@@ -77,24 +87,62 @@ v3 = {
   "name": "viewerHasLiked",
   "storageKey": null
 },
-v4 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "id",
-    "storageKey": null
-  }
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = [
+  (v4/*: any*/)
 ],
-v5 = {
+v6 = {
   "kind": "InlineFragment",
-  "selections": (v4/*: any*/),
+  "selections": (v5/*: any*/),
   "type": "Comment",
   "abstractKey": null
 },
-v6 = {
+v7 = {
   "kind": "InlineFragment",
-  "selections": (v4/*: any*/),
+  "selections": [
+    (v4/*: any*/),
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 1
+        }
+      ],
+      "concreteType": "LikeConnection",
+      "kind": "LinkedField",
+      "name": "likes",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "total",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "likes(first:1)"
+    }
+  ],
   "type": "Post",
   "abstractKey": null
 };
@@ -123,8 +171,8 @@ return {
             "selections": [
               (v2/*: any*/),
               (v3/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/)
+              (v6/*: any*/),
+              (v7/*: any*/)
             ],
             "storageKey": null
           }
@@ -159,11 +207,11 @@ return {
             "selections": [
               (v2/*: any*/),
               (v3/*: any*/),
-              (v5/*: any*/),
               (v6/*: any*/),
+              (v7/*: any*/),
               {
                 "kind": "InlineFragment",
-                "selections": (v4/*: any*/),
+                "selections": (v5/*: any*/),
                 "type": "Node",
                 "abstractKey": "__isNode"
               }
@@ -176,14 +224,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3cef9a4eebd57455414d36ed65b90da7",
+    "cacheID": "253f49ec327e12f7f3b880684c6e3b3d",
     "id": null,
     "metadata": {},
     "name": "LikeButtonAddLikeMutation",
     "operationKind": "mutation",
-    "text": "mutation LikeButtonAddLikeMutation(\n  $input: AddLikeInput!\n) {\n  addLike(input: $input) {\n    subject {\n      __typename\n      viewerHasLiked\n      ... on Comment {\n        id\n      }\n      ... on Post {\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation LikeButtonAddLikeMutation(\n  $input: AddLikeInput!\n) {\n  addLike(input: $input) {\n    subject {\n      __typename\n      viewerHasLiked\n      ... on Comment {\n        id\n      }\n      ... on Post {\n        id\n        likes(first: 1) {\n          pageInfo {\n            total\n          }\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'aeffe3b8b605eaafcad1ae4328a40f40';
+(node as any).hash = '3cf3e83a810dbc63e07dde67f14f8f2d';
 export default node;

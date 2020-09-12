@@ -20,6 +20,11 @@ export type Scalars = {
 
 
 
+
+
+
+
+
 /** Order by clause for the `orderBy` argument on the query `comments`. */
 export type PostCommentsOrderByOrderByClause = {
   /** The column that is used for ordering. */
@@ -39,11 +44,6 @@ export enum SortOrder {
   /** Sort records in descending order. */
   DESC = 'DESC'
 }
-
-
-
-
-
 
 
 

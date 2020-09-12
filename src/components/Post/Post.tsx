@@ -51,6 +51,11 @@ export function Post(props: PostProps) {
             }
           }
         }
+        likes(first: 1) {
+          pageInfo {
+            total
+          }
+        }
         user {
           username
         }
@@ -147,9 +152,11 @@ export function Post(props: PostProps) {
             <FontAwesomeIcon icon={faBookmark} size="lg" />
           </Flex>
         </Flex>
-        <Text fontSize="sm" fontWeight="semibold" pt={2}>
-          10,947 Me Gusta
-        </Text>
+        {post.likes.pageInfo.total > 0 && (
+          <Text fontSize="sm" fontWeight="semibold" pt={2}>
+            {post.likes.pageInfo.total} me gusta
+          </Text>
+        )}
         <Flex>
           <Stack isInline fontSize="sm" pt={1} spacing={1}>
             <Text fontWeight="semibold">{post.user.username}</Text>

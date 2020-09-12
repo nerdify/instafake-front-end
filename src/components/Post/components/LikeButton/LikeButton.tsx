@@ -28,6 +28,11 @@ export function LikeButton({size, subject: _subject}: LikeButtonProps) {
         }
         ... on Post {
           id
+          likes(first: 1) {
+            pageInfo {
+              total
+            }
+          }
         }
       }
     `,
@@ -44,6 +49,11 @@ export function LikeButton({size, subject: _subject}: LikeButtonProps) {
           }
           ... on Post {
             id
+            likes(first: 1) {
+              pageInfo {
+                total
+              }
+            }
           }
         }
       }
@@ -58,6 +68,13 @@ export function LikeButton({size, subject: _subject}: LikeButtonProps) {
             __typename: subject.__typename,
             id: subject.id,
             viewerHasLiked: true,
+            ...(subject.__typename === `Post` && {
+              likes: {
+                pageInfo: {
+                  total: subject.likes.pageInfo.total + 1,
+                },
+              },
+            }),
           },
         },
       },
