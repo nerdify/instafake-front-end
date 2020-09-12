@@ -16,7 +16,6 @@ import {
 } from '@chakra-ui/core'
 import {faEllipsisH as falEllipsisH} from '@fortawesome/pro-light-svg-icons'
 import {
-  faHeart,
   faComment,
   faPaperPlane,
   faBookmark,
@@ -26,7 +25,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Post_post$key} from './__generated__/Post_post.graphql'
 import {PostCreateCommentMutation} from './__generated__/PostCreateCommentMutation.graphql'
 
-import {Comment} from './components'
+import {Comment, LikeButton} from './components'
 
 interface PostProps {
   post: Post_post$key
@@ -37,6 +36,7 @@ export function Post(props: PostProps) {
   const post = useFragment(
     graphql`
       fragment Post_post on Post {
+        ...LikeButton_subject
         description
         id
         comments(first: 3, orderBy: {column: CREATED_AT, order: DESC})
@@ -58,7 +58,7 @@ export function Post(props: PostProps) {
     `,
     props.post
   )
-  const [createCommentCommit, {loading}] = useMutation<
+  const [createCommentCommit, {loading: createCommentLoading}] = useMutation<
     PostCreateCommentMutation
   >(graphql`
     mutation PostCreateCommentMutation($input: CreateCommentInput!) {
@@ -138,8 +138,8 @@ export function Post(props: PostProps) {
       </Flex>
       <Box p={4}>
         <Flex align="center" justify="space-between">
-          <Stack isInline spacing={4}>
-            <FontAwesomeIcon icon={faHeart} size="lg" />
+          <Stack isInline align="center" spacing={4}>
+            <LikeButton subject={post} size="lg" />
             <FontAwesomeIcon icon={faComment} size="lg" />
             <FontAwesomeIcon icon={faPaperPlane} size="lg" />
           </Stack>
@@ -201,7 +201,7 @@ export function Post(props: PostProps) {
         >
           Publicar
         </Button>
-        {loading && (
+        {createCommentLoading && (
           <Center
             bg="whiteAlpha.500"
             bottom={0}
