@@ -52,6 +52,11 @@ fragment LikeButton_subject on Likeable {
   }
   ... on Post {
     id
+    likes(first: 1) {
+      pageInfo {
+        total
+      }
+    }
   }
 }
 
@@ -72,6 +77,11 @@ fragment Post_post on Post {
         __typename
       }
       cursor
+    }
+  }
+  likes(first: 1) {
+    pageInfo {
+      total
     }
   }
   user {
@@ -114,6 +124,13 @@ v2 = [
 v3 = {
   "alias": null,
   "args": null,
+  "kind": "ScalarField",
+  "name": "total",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
   "concreteType": "User",
   "kind": "LinkedField",
   "name": "user",
@@ -130,19 +147,42 @@ v3 = {
   ],
   "storageKey": null
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "viewerHasLiked",
   "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": (v0/*: any*/),
+  "concreteType": "LikeConnection",
+  "kind": "LinkedField",
+  "name": "likes",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "PageInfo",
+      "kind": "LinkedField",
+      "name": "pageInfo",
+      "plural": false,
+      "selections": [
+        (v3/*: any*/)
+      ],
+      "storageKey": null
+    }
+  ],
+  "storageKey": "likes(first:1)"
 };
 return {
   "fragment": {
@@ -248,13 +288,7 @@ return {
                         "name": "pageInfo",
                         "plural": false,
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "total",
-                            "storageKey": null
-                          },
+                          (v3/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -295,13 +329,21 @@ return {
                                 "name": "text",
                                 "storageKey": null
                               },
-                              (v3/*: any*/),
-                              (v1/*: any*/),
                               (v4/*: any*/),
+                              (v1/*: any*/),
+                              (v5/*: any*/),
                               {
                                 "kind": "InlineFragment",
                                 "selections": [
-                                  (v5/*: any*/)
+                                  (v6/*: any*/),
+                                  {
+                                    "kind": "InlineFragment",
+                                    "selections": [
+                                      (v7/*: any*/)
+                                    ],
+                                    "type": "Post",
+                                    "abstractKey": null
+                                  }
                                 ],
                                 "type": "Likeable",
                                 "abstractKey": "__isLikeable"
@@ -325,20 +367,19 @@ return {
                   {
                     "alias": null,
                     "args": (v2/*: any*/),
-                    "filters": [
-                      "orderBy"
-                    ],
+                    "filters": [],
                     "handle": "connection",
                     "key": "Post_comments",
                     "kind": "LinkedHandle",
                     "name": "comments"
                   },
-                  (v3/*: any*/),
+                  (v7/*: any*/),
+                  (v4/*: any*/),
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v4/*: any*/),
-                      (v5/*: any*/)
+                      (v5/*: any*/),
+                      (v6/*: any*/)
                     ],
                     "type": "Likeable",
                     "abstractKey": "__isLikeable"
@@ -355,12 +396,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f6790471174fb6368622bd52566c41ec",
+    "cacheID": "937cfb79855ebd1de2aec88f729e45a6",
     "id": null,
     "metadata": {},
     "name": "TimelinePostsQuery",
     "operationKind": "query",
-    "text": "query TimelinePostsQuery {\n  posts(first: 1) {\n    edges {\n      node {\n        ...Post_post\n        id\n      }\n    }\n  }\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n  }\n}\n\nfragment Post_post on Post {\n  ...LikeButton_subject\n  description\n  id\n  comments(first: 3, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...Comment_comment\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
+    "text": "query TimelinePostsQuery {\n  posts(first: 1) {\n    edges {\n      node {\n        ...Post_post\n        id\n      }\n    }\n  }\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post on Post {\n  ...LikeButton_subject\n  description\n  id\n  comments(first: 3, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...Comment_comment\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
   }
 };
 })();

@@ -40,7 +40,7 @@ export function Post(props: PostProps) {
         description
         id
         comments(first: 3, orderBy: {column: CREATED_AT, order: DESC})
-        @connection(key: "Post_comments") {
+        @connection(filters: [], key: "Post_comments") {
           pageInfo {
             total
           }
@@ -49,6 +49,11 @@ export function Post(props: PostProps) {
               ...Comment_comment
               id
             }
+          }
+        }
+        likes(first: 1) {
+          pageInfo {
+            total
           }
         }
         user {
@@ -65,6 +70,7 @@ export function Post(props: PostProps) {
       createComment(input: $input) {
         commentEdge {
           node {
+            ...LikeButton_subject
             text
             user {
               username
@@ -92,7 +98,7 @@ export function Post(props: PostProps) {
           connectionInfo: [
             {
               key: `Post_comments`,
-              rangeBehavior: `append`,
+              rangeBehavior: `prepend`,
             },
           ],
         },
@@ -147,9 +153,11 @@ export function Post(props: PostProps) {
             <FontAwesomeIcon icon={faBookmark} size="lg" />
           </Flex>
         </Flex>
-        <Text fontSize="sm" fontWeight="semibold" pt={2}>
-          10,947 Me Gusta
-        </Text>
+        {post.likes.pageInfo.total > 0 && (
+          <Text fontSize="sm" fontWeight="semibold" pt={2}>
+            {post.likes.pageInfo.total} me gusta
+          </Text>
+        )}
         <Flex>
           <Stack isInline fontSize="sm" pt={1} spacing={1}>
             <Text fontWeight="semibold">{post.user.username}</Text>

@@ -18,6 +18,11 @@ export type Post_post = {
             } | null;
         } | null> | null;
     } | null;
+    readonly likes: {
+        readonly pageInfo: {
+            readonly total: number | null;
+        };
+    } | null;
     readonly user: {
         readonly username: string;
     };
@@ -38,6 +43,13 @@ var v0 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "total",
   "storageKey": null
 };
 return {
@@ -67,16 +79,7 @@ return {
     (v0/*: any*/),
     {
       "alias": "comments",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "orderBy",
-          "value": {
-            "column": "CREATED_AT",
-            "order": "DESC"
-          }
-        }
-      ],
+      "args": null,
       "concreteType": "CommentConnection",
       "kind": "LinkedField",
       "name": "__Post_comments_connection",
@@ -90,13 +93,7 @@ return {
           "name": "pageInfo",
           "plural": false,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "total",
-              "storageKey": null
-            },
+            (v1/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -157,7 +154,36 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "__Post_comments_connection(orderBy:{\"column\":\"CREATED_AT\",\"order\":\"DESC\"})"
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 1
+        }
+      ],
+      "concreteType": "LikeConnection",
+      "kind": "LinkedField",
+      "name": "likes",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            (v1/*: any*/)
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "likes(first:1)"
     },
     {
       "alias": null,
@@ -187,5 +213,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'a111d73e27ed80640c98ded61c87e8b9';
+(node as any).hash = 'ac35f52cc0fe243e6c85dfd37e087ec3';
 export default node;

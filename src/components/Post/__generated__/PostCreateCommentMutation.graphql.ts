@@ -3,6 +3,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type CreateCommentInput = {
     postId: string;
     text: string;
@@ -19,6 +20,7 @@ export type PostCreateCommentMutationResponse = {
                 readonly user: {
                     readonly username: string;
                 };
+                readonly " $fragmentRefs": FragmentRefs<"LikeButton_subject">;
             } | null;
         };
     } | null;
@@ -37,12 +39,30 @@ mutation PostCreateCommentMutation(
   createComment(input: $input) {
     commentEdge {
       node {
+        ...LikeButton_subject
         text
         user {
           username
           id
         }
         id
+      }
+    }
+  }
+}
+
+fragment LikeButton_subject on Likeable {
+  __isLikeable: __typename
+  __typename
+  viewerHasLiked
+  ... on Comment {
+    id
+  }
+  ... on Post {
+    id
+    likes(first: 1) {
+      pageInfo {
+        total
       }
     }
   }
@@ -128,6 +148,11 @@ return {
                       (v3/*: any*/)
                     ],
                     "storageKey": null
+                  },
+                  {
+                    "args": null,
+                    "kind": "FragmentSpread",
+                    "name": "LikeButton_subject"
                   }
                 ],
                 "storageKey": null
@@ -186,7 +211,70 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v4/*: any*/)
+                  (v4/*: any*/),
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "__typename",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "viewerHasLiked",
+                        "storageKey": null
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "first",
+                                "value": 1
+                              }
+                            ],
+                            "concreteType": "LikeConnection",
+                            "kind": "LinkedField",
+                            "name": "likes",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "PageInfo",
+                                "kind": "LinkedField",
+                                "name": "pageInfo",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "total",
+                                    "storageKey": null
+                                  }
+                                ],
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": "likes(first:1)"
+                          }
+                        ],
+                        "type": "Post",
+                        "abstractKey": null
+                      }
+                    ],
+                    "type": "Likeable",
+                    "abstractKey": "__isLikeable"
+                  }
                 ],
                 "storageKey": null
               }
@@ -199,14 +287,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5f3538b657f18b26fca6a7bf5f70b2d1",
+    "cacheID": "777923c29b30381809400fb80fc90421",
     "id": null,
     "metadata": {},
     "name": "PostCreateCommentMutation",
     "operationKind": "mutation",
-    "text": "mutation PostCreateCommentMutation(\n  $input: CreateCommentInput!\n) {\n  createComment(input: $input) {\n    commentEdge {\n      node {\n        text\n        user {\n          username\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation PostCreateCommentMutation(\n  $input: CreateCommentInput!\n) {\n  createComment(input: $input) {\n    commentEdge {\n      node {\n        ...LikeButton_subject\n        text\n        user {\n          username\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b427e54987a1a58150850b0dc5d4b5be';
+(node as any).hash = '0e68ad79c034a6b0c243204af537056b';
 export default node;
