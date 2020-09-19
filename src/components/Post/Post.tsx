@@ -40,7 +40,7 @@ export function Post(props: PostProps) {
         description
         id
         comments(first: 3, orderBy: {column: CREATED_AT, order: DESC})
-        @connection(filters: [], key: "Post_comments") {
+          @connection(filters: [], key: "Post_comments") {
           pageInfo {
             total
           }
