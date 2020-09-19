@@ -15,17 +15,13 @@ import {
   Text,
 } from '@chakra-ui/core'
 import {faEllipsisH as falEllipsisH} from '@fortawesome/pro-light-svg-icons'
-import {
-  faComment,
-  faPaperPlane,
-  faBookmark,
-} from '@fortawesome/pro-regular-svg-icons'
+import {faComment, faPaperPlane} from '@fortawesome/pro-regular-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import {Post_post$key} from './__generated__/Post_post.graphql'
 import {PostCreateCommentMutation} from './__generated__/PostCreateCommentMutation.graphql'
 
-import {Comment, LikeButton} from './components'
+import {BookmarkButton, Comment, LikeButton} from './components'
 
 interface PostProps {
   post: Post_post$key
@@ -36,7 +32,9 @@ export function Post(props: PostProps) {
   const post = useFragment(
     graphql`
       fragment Post_post on Post {
+        ...BookmarkButton_post
         ...LikeButton_subject
+
         description
         id
         comments(first: 3, orderBy: {column: CREATED_AT, order: DESC})
@@ -150,7 +148,7 @@ export function Post(props: PostProps) {
             <FontAwesomeIcon icon={faPaperPlane} size="lg" />
           </Stack>
           <Flex>
-            <FontAwesomeIcon icon={faBookmark} size="lg" />
+            <BookmarkButton post={post} size="lg" />
           </Flex>
         </Flex>
         {post.likes.pageInfo.total > 0 && (
