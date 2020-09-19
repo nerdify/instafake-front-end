@@ -24,7 +24,7 @@ export type TimelinePostsQuery = {
 
 /*
 query TimelinePostsQuery {
-  posts(first: 1) {
+  posts(first: 10) {
     edges {
       node {
         ...Post_post
@@ -32,6 +32,11 @@ query TimelinePostsQuery {
       }
     }
   }
+}
+
+fragment BookmarkButton_post on Post {
+  id
+  viewerHasBookmarked
 }
 
 fragment Comment_comment on Comment {
@@ -61,6 +66,7 @@ fragment LikeButton_subject on Likeable {
 }
 
 fragment Post_post on Post {
+  ...BookmarkButton_post
   ...LikeButton_subject
   description
   id
@@ -96,7 +102,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 1
+    "value": 10
   }
 ],
 v1 = {
@@ -163,7 +169,13 @@ v6 = {
 },
 v7 = {
   "alias": null,
-  "args": (v0/*: any*/),
+  "args": [
+    {
+      "kind": "Literal",
+      "name": "first",
+      "value": 1
+    }
+  ],
   "concreteType": "LikeConnection",
   "kind": "LinkedField",
   "name": "likes",
@@ -228,7 +240,7 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "posts(first:1)"
+        "storageKey": "posts(first:10)"
       }
     ],
     "type": "Query",
@@ -264,6 +276,14 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
+                  (v1/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "viewerHasBookmarked",
+                    "storageKey": null
+                  },
                   {
                     "alias": null,
                     "args": null,
@@ -271,7 +291,6 @@ return {
                     "name": "description",
                     "storageKey": null
                   },
-                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": (v2/*: any*/),
@@ -391,19 +410,19 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "posts(first:1)"
+        "storageKey": "posts(first:10)"
       }
     ]
   },
   "params": {
-    "cacheID": "937cfb79855ebd1de2aec88f729e45a6",
+    "cacheID": "04cbb0991013afd2682b47bade585f65",
     "id": null,
     "metadata": {},
     "name": "TimelinePostsQuery",
     "operationKind": "query",
-    "text": "query TimelinePostsQuery {\n  posts(first: 1) {\n    edges {\n      node {\n        ...Post_post\n        id\n      }\n    }\n  }\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post on Post {\n  ...LikeButton_subject\n  description\n  id\n  comments(first: 3, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...Comment_comment\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
+    "text": "query TimelinePostsQuery {\n  posts(first: 10) {\n    edges {\n      node {\n        ...Post_post\n        id\n      }\n    }\n  }\n}\n\nfragment BookmarkButton_post on Post {\n  id\n  viewerHasBookmarked\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post on Post {\n  ...BookmarkButton_post\n  ...LikeButton_subject\n  description\n  id\n  comments(first: 3, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...Comment_comment\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ca688f425a1d81f101d48405358a9445';
+(node as any).hash = 'b748b069720dfcd93719fc313555d13c';
 export default node;

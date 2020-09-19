@@ -40,6 +40,11 @@ type Post implements Likeable & Node {
   user: User!
 
   """
+  Returns a boolean indicating whether the viewing user has saved this post.
+  """
+  viewerHasBookmarked: Boolean!
+
+  """
   Returns a boolean indicating whether the viewing user has liked this post.
   """
   viewerHasLiked: Boolean!
@@ -231,6 +236,7 @@ type LikeEdge {
 type Mutation {
   createComment(input: CreateCommentInput!): CreateCommentPayload
   addLike(input: AddLikeInput!): AddLikePayload
+  createBookmark(input: CreateBookmarkInput!): CreateBookmarkPayload
 }
 
 input CreateCommentInput {
@@ -251,6 +257,14 @@ input AddLikeInput {
 type AddLikePayload {
   like: Like!
   subject: Likeable!
+}
+
+input CreateBookmarkInput {
+  postId: ID!
+}
+
+type CreateBookmarkPayload {
+  post: Post
 }
 
 """Entities that can be deleted."""

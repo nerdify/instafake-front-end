@@ -26,7 +26,7 @@ export type Post_post = {
     readonly user: {
         readonly username: string;
     };
-    readonly " $fragmentRefs": FragmentRefs<"LikeButton_subject">;
+    readonly " $fragmentRefs": FragmentRefs<"BookmarkButton_post" | "LikeButton_subject">;
     readonly " $refType": "Post_post";
 };
 export type Post_post$data = Post_post;
@@ -206,6 +206,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "BookmarkButton_post"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "LikeButton_subject"
     }
   ],
@@ -213,5 +218,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'ac35f52cc0fe243e6c85dfd37e087ec3';
+(node as any).hash = '05fc9559906537dcc26a62857636570b';
 export default node;
