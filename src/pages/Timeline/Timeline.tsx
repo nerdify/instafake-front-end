@@ -1,5 +1,5 @@
-import React from 'react'
-import {graphql, useLazyLoadQuery} from 'react-relay/hooks'
+import React, {useMemo} from 'react'
+import {graphql, useLazyLoadQuery, useSubscription} from 'react-relay/hooks'
 import {Stack} from '@chakra-ui/core'
 
 import {TimelinePostsQuery} from './__generated__/TimelinePostsQuery.graphql'
@@ -23,6 +23,26 @@ export function Timeline() {
     `,
     {}
   )
+
+  const subscriptionConfig = useMemo(
+    () => ({
+      variables: {},
+      subscription: graphql`
+        subscription TimelinePostUpdatedSubscription {
+          postUpdated {
+            likes(first: 1) {
+              pageInfo {
+                total
+              }
+            }
+          }
+        }
+      `,
+    }),
+    []
+  )
+
+  useSubscription(subscriptionConfig)
 
   return (
     <Stack spacing={4} pb={4}>

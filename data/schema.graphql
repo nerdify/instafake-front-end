@@ -267,6 +267,10 @@ type CreateBookmarkPayload {
   post: Post
 }
 
+type Subscription {
+  postUpdated: Post
+}
+
 """Entities that can be deleted."""
 interface Deletable {
   """Check if the current viewer can delete this object."""
