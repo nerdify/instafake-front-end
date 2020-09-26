@@ -7,6 +7,7 @@ import { FragmentRefs } from "relay-runtime";
 export type Post_post = {
     readonly description: string | null;
     readonly id: string;
+    readonly imageUrl: string;
     readonly comments: {
         readonly pageInfo: {
             readonly total: number | null;
@@ -77,6 +78,13 @@ return {
       "storageKey": null
     },
     (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "imageUrl",
+      "storageKey": null
+    },
     {
       "alias": "comments",
       "args": null,
@@ -218,5 +226,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '05fc9559906537dcc26a62857636570b';
+(node as any).hash = '12de8666636463e2dac88fa71db2f2a5';
 export default node;

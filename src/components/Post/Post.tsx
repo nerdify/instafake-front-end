@@ -34,9 +34,9 @@ export function Post(props: PostProps) {
       fragment Post_post on Post {
         ...BookmarkButton_post
         ...LikeButton_subject
-
         description
         id
+        imageUrl
         comments(first: 3, orderBy: {column: CREATED_AT, order: DESC})
           @connection(filters: [], key: "Post_comments") {
           pageInfo {
@@ -138,7 +138,7 @@ export function Post(props: PostProps) {
         <FontAwesomeIcon icon={falEllipsisH} size="2x" />
       </Flex>
       <Flex>
-        <img src="https://source.unsplash.com/random/1024x600" alt="test" />
+        <img src={post.imageUrl} alt="test" />
       </Flex>
       <Box p={4}>
         <Flex align="center" justify="space-between">

@@ -27,6 +27,9 @@ type Post implements Likeable & Node {
   description: String
   id: ID!
 
+  """"""
+  imageUrl: URI!
+
   """A list of likes associated with the post."""
   likes(
     """Limits number of fetched elements."""
@@ -233,10 +236,14 @@ type LikeEdge {
   cursor: String!
 }
 
+"""An RFC 3986 and RFC 3987 compliant URI string."""
+scalar URI
+
 type Mutation {
   createComment(input: CreateCommentInput!): CreateCommentPayload
   addLike(input: AddLikeInput!): AddLikePayload
   createBookmark(input: CreateBookmarkInput!): CreateBookmarkPayload
+  createPost(input: CreatePostInput!): CreatePostPayload
 }
 
 input CreateCommentInput {
@@ -267,6 +274,20 @@ type CreateBookmarkPayload {
   post: Post
 }
 
+input CreatePostInput {
+  photo: Upload!
+  text: String!
+}
+
+"""
+Can be used as an argument to upload files using https://github.com/jaydenseric/graphql-multipart-request-spec.
+"""
+scalar Upload
+
+type CreatePostPayload {
+  post: Post!
+}
+
 type Subscription {
   postUpdated: Post
 }
@@ -286,9 +307,6 @@ interface UniformResourceLocatable {
   url: URI!
 }
 
-"""An RFC 3986 and RFC 3987 compliant URI string."""
-scalar URI
-
 """Entities that can be updated."""
 interface Updatable {
   """Check if the current viewer can update this object."""
@@ -296,7 +314,7 @@ interface Updatable {
 }
 
 """
-An ISO-8601 encoded UTC date time string. Example value: `2019-07-03T20:47:55Z`
+An ISO-8601 encoded UTC date time string. Example value: `2019-07-03T20:47:55Z`.
 """
 scalar DateTime
 
