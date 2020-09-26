@@ -9,6 +9,7 @@ import {
   Center,
   Flex,
   Heading,
+  Image,
   Textarea,
   Spinner,
   Stack,
@@ -138,7 +139,7 @@ export function Post(props: PostProps) {
         <FontAwesomeIcon icon={falEllipsisH} size="2x" />
       </Flex>
       <Flex>
-        <img src={post.imageUrl} alt="test" />
+        <Image src={post.imageUrl} w="full" />
       </Flex>
       <Box p={4}>
         <Flex align="center" justify="space-between">
