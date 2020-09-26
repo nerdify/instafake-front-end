@@ -28,7 +28,7 @@ type Post implements Likeable & Node {
   id: ID!
 
   """"""
-  imageUrl: URI!
+  images: [Image!]!
 
   """A list of likes associated with the post."""
   likes(
@@ -236,6 +236,10 @@ type LikeEdge {
   cursor: String!
 }
 
+type Image {
+  url: URI!
+}
+
 """An RFC 3986 and RFC 3987 compliant URI string."""
 scalar URI
 
@@ -275,7 +279,7 @@ type CreateBookmarkPayload {
 }
 
 input CreatePostInput {
-  photo: Upload!
+  photos: [Upload!]!
   text: String!
 }
 

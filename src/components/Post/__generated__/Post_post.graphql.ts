@@ -7,7 +7,6 @@ import { FragmentRefs } from "relay-runtime";
 export type Post_post = {
     readonly description: string | null;
     readonly id: string;
-    readonly imageUrl: string;
     readonly comments: {
         readonly pageInfo: {
             readonly total: number | null;
@@ -19,6 +18,9 @@ export type Post_post = {
             } | null;
         } | null> | null;
     } | null;
+    readonly images: ReadonlyArray<{
+        readonly url: string;
+    }>;
     readonly likes: {
         readonly pageInfo: {
             readonly total: number | null;
@@ -78,13 +80,6 @@ return {
       "storageKey": null
     },
     (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "imageUrl",
-      "storageKey": null
-    },
     {
       "alias": "comments",
       "args": null,
@@ -166,6 +161,24 @@ return {
     },
     {
       "alias": null,
+      "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "images",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -226,5 +239,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '12de8666636463e2dac88fa71db2f2a5';
+(node as any).hash = '0a75da2584344d028105782e754c8eb6';
 export default node;

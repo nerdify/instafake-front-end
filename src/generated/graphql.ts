@@ -54,6 +54,7 @@ export enum SortOrder {
 
 
 
+
 export type CreateCommentInput = {
   postId: Scalars['ID'];
   text: Scalars['String'];
@@ -72,7 +73,7 @@ export type CreateBookmarkInput = {
 
 
 export type CreatePostInput = {
-  photo: Scalars['Upload'];
+  photos: Array<Scalars['Upload']>;
   text: Scalars['String'];
 };
 

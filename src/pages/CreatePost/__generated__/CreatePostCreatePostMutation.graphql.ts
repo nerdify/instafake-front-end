@@ -4,7 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreatePostInput = {
-    photo: unknown;
+    photos: Array<unknown>;
     text: string;
 };
 export type CreatePostCreatePostMutationVariables = {

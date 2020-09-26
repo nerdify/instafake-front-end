@@ -38,7 +38,7 @@ export function CreatePost() {
   function handleSubmit(values) {
     createPostCommit({
       uploadables: {
-        photo: values.photo,
+        photos: values.photos,
       },
       variables: {
         // @ts-expect-error
@@ -61,10 +61,10 @@ export function CreatePost() {
         validationSchema={validationSchema}
         initialValues={{
           text: ``,
-          photo: null,
+          photos: [],
         }}
       >
-        {({setFieldValue}) => (
+        {({setFieldValue, values}) => (
           <Form>
             <Box>
               <Field name="text">
@@ -80,7 +80,7 @@ export function CreatePost() {
                 )}
               </Field>
 
-              <Field name="photo">
+              <Field name="photos">
                 {({field, meta}) => (
                   <FormControl
                     isRequired
@@ -88,10 +88,14 @@ export function CreatePost() {
                   >
                     <FormLabel>Photo</FormLabel>
                     <input
+                      multiple
                       type="file"
                       onChange={(e) => {
                         // field.onChange(`photo`)(e.target.files[0])
-                        setFieldValue(`photo`, e.target.files[0])
+                        setFieldValue(`photos`, [
+                          ...values.photos,
+                          ...Array.from(e.target.files),
+                        ])
                       }}
                     />
                     <FormErrorMessage>{meta.error}</FormErrorMessage>
