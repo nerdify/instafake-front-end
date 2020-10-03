@@ -1,3 +1,4 @@
+/* eslint relay/must-colocate-fragment-spreads: off */
 import React, {useState} from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
 import {useMutation} from 'react-relay-mutation'
@@ -22,7 +23,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Post_post$key} from './__generated__/Post_post.graphql'
 import {PostCreateCommentMutation} from './__generated__/PostCreateCommentMutation.graphql'
 
-import {BookmarkButton, Comment, LikeButton} from './components'
+import {BookmarkButton, Comment, Gallery, LikeButton} from './components'
 
 interface PostProps {
   post: Post_post$key
@@ -50,7 +51,7 @@ export function Post(props: PostProps) {
           }
         }
         images {
-          url
+          ...Gallery_images
         }
         likes(first: 1) {
           pageInfo {
@@ -140,11 +141,7 @@ export function Post(props: PostProps) {
         </Stack>
         <FontAwesomeIcon icon={falEllipsisH} size="2x" />
       </Flex>
-      <Stack isInline>
-        {post.images.map((image) => (
-          <Image key={image.url} src={image.url} w="128px" />
-        ))}
-      </Stack>
+      <Gallery images={post.images} />
       <Box p={4}>
         <Flex align="center" justify="space-between">
           <Stack isInline align="center" spacing={4}>
