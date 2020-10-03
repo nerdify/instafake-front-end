@@ -18,6 +18,9 @@ export type Post_post = {
             } | null;
         } | null> | null;
     } | null;
+    readonly images: ReadonlyArray<{
+        readonly url: string;
+    }>;
     readonly likes: {
         readonly pageInfo: {
             readonly total: number | null;
@@ -158,6 +161,24 @@ return {
     },
     {
       "alias": null,
+      "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "images",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -218,5 +239,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '05fc9559906537dcc26a62857636570b';
+(node as any).hash = '0a75da2584344d028105782e754c8eb6';
 export default node;

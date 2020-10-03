@@ -10,7 +10,9 @@ export type Scalars = {
   Float: number;
   /** An RFC 3986 and RFC 3987 compliant URI string. */
   URI: string;
-  /** An ISO-8601 encoded UTC date time string. Example value: `2019-07-03T20:47:55Z` */
+  /** Can be used as an argument to upload files using https://github.com/jaydenseric/graphql-multipart-request-spec. */
+  Upload: any;
+  /** An ISO-8601 encoded UTC date time string. Example value: `2019-07-03T20:47:55Z`. */
   DateTime: string;
   /** A [RFC 5321](https://tools.ietf.org/html/rfc5321) compliant email. */
   Email: string;
@@ -51,6 +53,8 @@ export enum SortOrder {
 
 
 
+
+
 export type CreateCommentInput = {
   postId: Scalars['ID'];
   text: Scalars['String'];
@@ -61,6 +65,18 @@ export type CreateCommentInput = {
 export type AddLikeInput = {
   subjectId: Scalars['ID'];
 };
+
+
+export type CreateBookmarkInput = {
+  postId: Scalars['ID'];
+};
+
+
+export type CreatePostInput = {
+  photos: Array<Scalars['Upload']>;
+  text: Scalars['String'];
+};
+
 
 
 

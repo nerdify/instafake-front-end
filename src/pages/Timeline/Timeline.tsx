@@ -45,7 +45,7 @@ export function Timeline() {
   useSubscription(subscriptionConfig)
 
   return (
-    <Stack spacing={4} pb={4}>
+    <Stack spacing={4} pb={4} maxW="container.sm">
       <StoriesCard />
 
       {posts.edges.map((edge) => {

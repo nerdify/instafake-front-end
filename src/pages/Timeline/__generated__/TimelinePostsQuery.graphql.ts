@@ -85,6 +85,9 @@ fragment Post_post on Post {
       cursor
     }
   }
+  images {
+    url
+  }
   likes(first: 1) {
     pageInfo {
       total
@@ -392,6 +395,24 @@ return {
                     "kind": "LinkedHandle",
                     "name": "comments"
                   },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Image",
+                    "kind": "LinkedField",
+                    "name": "images",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "url",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
                   (v7/*: any*/),
                   (v4/*: any*/),
                   {
@@ -415,12 +436,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "04cbb0991013afd2682b47bade585f65",
+    "cacheID": "1710ae584c9d8ffd7b7440e4555eb1be",
     "id": null,
     "metadata": {},
     "name": "TimelinePostsQuery",
     "operationKind": "query",
-    "text": "query TimelinePostsQuery {\n  posts(first: 10) {\n    edges {\n      node {\n        ...Post_post\n        id\n      }\n    }\n  }\n}\n\nfragment BookmarkButton_post on Post {\n  id\n  viewerHasBookmarked\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post on Post {\n  ...BookmarkButton_post\n  ...LikeButton_subject\n  description\n  id\n  comments(first: 3, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...Comment_comment\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
+    "text": "query TimelinePostsQuery {\n  posts(first: 10) {\n    edges {\n      node {\n        ...Post_post\n        id\n      }\n    }\n  }\n}\n\nfragment BookmarkButton_post on Post {\n  id\n  viewerHasBookmarked\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post on Post {\n  ...BookmarkButton_post\n  ...LikeButton_subject\n  description\n  id\n  comments(first: 3, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...Comment_comment\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  images {\n    url\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
   }
 };
 })();

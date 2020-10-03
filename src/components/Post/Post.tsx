@@ -9,6 +9,7 @@ import {
   Center,
   Flex,
   Heading,
+  Image,
   Textarea,
   Spinner,
   Stack,
@@ -34,7 +35,6 @@ export function Post(props: PostProps) {
       fragment Post_post on Post {
         ...BookmarkButton_post
         ...LikeButton_subject
-
         description
         id
         comments(first: 3, orderBy: {column: CREATED_AT, order: DESC})
@@ -48,6 +48,9 @@ export function Post(props: PostProps) {
               id
             }
           }
+        }
+        images {
+          url
         }
         likes(first: 1) {
           pageInfo {
@@ -137,9 +140,11 @@ export function Post(props: PostProps) {
         </Stack>
         <FontAwesomeIcon icon={falEllipsisH} size="2x" />
       </Flex>
-      <Flex>
-        <img src="https://source.unsplash.com/random/1024x600" alt="test" />
-      </Flex>
+      <Stack isInline>
+        {post.images.map((image) => (
+          <Image key={image.url} src={image.url} w="128px" />
+        ))}
+      </Stack>
       <Box p={4}>
         <Flex align="center" justify="space-between">
           <Stack isInline align="center" spacing={4}>
