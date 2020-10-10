@@ -19,7 +19,7 @@ export type Post_post = {
         } | null> | null;
     } | null;
     readonly images: ReadonlyArray<{
-        readonly url: string;
+        readonly " $fragmentRefs": FragmentRefs<"Gallery_images">;
     }>;
     readonly likes: {
         readonly pageInfo: {
@@ -168,11 +168,9 @@ return {
       "plural": true,
       "selections": [
         {
-          "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": null
+          "kind": "FragmentSpread",
+          "name": "Gallery_images"
         }
       ],
       "storageKey": null
@@ -239,5 +237,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '0a75da2584344d028105782e754c8eb6';
+(node as any).hash = '478c6d608df47adf932eb1ca85d01698';
 export default node;
