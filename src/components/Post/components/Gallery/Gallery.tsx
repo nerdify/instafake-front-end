@@ -73,32 +73,34 @@ export function Gallery(props: GalleryProps) {
           </Arrow>
         )}
       </Flex>
-      <AnimateSharedLayout>
-        <Stack isInline justify="center" mt={2} spacing={2}>
-          {images.map((_, i) => (
-            <Box
-              bg="gray.300"
-              borderRadius="full"
-              boxSize={2}
-              key={i}
-              position="relative"
-              onClick={() => setImageIndex(i)}
-            >
-              {imageIndex === i && (
-                <Box
-                  as={motion.div}
-                  bg="blue.300"
-                  borderRadius="inherit"
-                  inset={0}
-                  layoutId="dot"
-                  position="absolute"
-                  zIndex="docked"
-                />
-              )}
-            </Box>
-          ))}
-        </Stack>
-      </AnimateSharedLayout>
+      {images.length > 1 && (
+        <AnimateSharedLayout>
+          <Stack isInline justify="center" mt={2} spacing={2}>
+            {images.map((_, i) => (
+              <Box
+                bg="gray.300"
+                borderRadius="full"
+                boxSize={2}
+                key={i}
+                position="relative"
+                onClick={() => setImageIndex(i)}
+              >
+                {imageIndex === i && (
+                  <Box
+                    as={motion.div}
+                    bg="blue.300"
+                    borderRadius="inherit"
+                    inset={0}
+                    layoutId="dot"
+                    position="absolute"
+                    zIndex="docked"
+                  />
+                )}
+              </Box>
+            ))}
+          </Stack>
+        </AnimateSharedLayout>
+      )}
     </Box>
   )
 }

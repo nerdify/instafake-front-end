@@ -10,7 +10,6 @@ import {
   Center,
   Flex,
   Heading,
-  Image,
   Textarea,
   Spinner,
   Stack,
@@ -23,6 +22,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Post_post$key} from './__generated__/Post_post.graphql'
 import {PostCreateCommentMutation} from './__generated__/PostCreateCommentMutation.graphql'
 
+import {PostModal} from 'components'
 import {BookmarkButton, Comment, Gallery, LikeButton} from './components'
 
 interface PostProps {
@@ -31,6 +31,7 @@ interface PostProps {
 
 export function Post(props: PostProps) {
   const [textareaValue, setTextareaValue] = useState(``)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const post = useFragment(
     graphql`
       fragment Post_post on Post {
@@ -113,6 +114,15 @@ export function Post(props: PostProps) {
 
   return (
     <Box bg="white" border="1px solid" borderColor="gray.200" borderRadius="md">
+      <button
+        onClick={() => {
+          window.history.pushState(null, null, `posts/${post.id}`)
+          setIsModalOpen(true)
+        }}
+      >
+        Open in modal...
+      </button>
+      {isModalOpen && <PostModal postId={post.id} />}
       <Flex
         justify="space-between"
         align="center"
