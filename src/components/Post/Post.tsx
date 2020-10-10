@@ -22,6 +22,7 @@ import {Post_post$key} from './__generated__/Post_post.graphql'
 import {PostCreateCommentMutation} from './__generated__/PostCreateCommentMutation.graphql'
 
 import {Actions, Comment, Gallery} from './components'
+import {PostModal} from 'components'
 
 interface PostProps {
   post: Post_post$key
@@ -29,6 +30,7 @@ interface PostProps {
 
 export function Post(props: PostProps) {
   const [textareaValue, setTextareaValue] = useState(``)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const post = useFragment(
     graphql`
       fragment Post_post on Post {
@@ -111,6 +113,15 @@ export function Post(props: PostProps) {
 
   return (
     <Box bg="white" border="1px solid" borderColor="gray.200" borderRadius="md">
+      <button
+        onClick={() => {
+          window.history.pushState(null, null, `posts/${post.id}`)
+          setIsModalOpen(true)
+        }}
+      >
+        Open in modal...
+      </button>
+      {isModalOpen && <PostModal postId={post.id} />}
       <Flex
         justify="space-between"
         align="center"
