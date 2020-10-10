@@ -16,14 +16,13 @@ import {
   Text,
 } from '@chakra-ui/core'
 import {faEllipsisH as falEllipsisH} from '@fortawesome/pro-light-svg-icons'
-import {faComment, faPaperPlane} from '@fortawesome/pro-regular-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import {Post_post$key} from './__generated__/Post_post.graphql'
 import {PostCreateCommentMutation} from './__generated__/PostCreateCommentMutation.graphql'
 
+import {Actions, Comment, Gallery} from './components'
 import {PostModal} from 'components'
-import {BookmarkButton, Comment, Gallery, LikeButton} from './components'
 
 interface PostProps {
   post: Post_post$key
@@ -35,8 +34,8 @@ export function Post(props: PostProps) {
   const post = useFragment(
     graphql`
       fragment Post_post on Post {
-        ...BookmarkButton_post
-        ...LikeButton_subject
+        ...Actions_post
+
         description
         id
         comments(first: 3, orderBy: {column: CREATED_AT, order: DESC})
@@ -152,17 +151,10 @@ export function Post(props: PostProps) {
         <FontAwesomeIcon icon={falEllipsisH} size="2x" />
       </Flex>
       <Gallery images={post.images} />
+
       <Box p={4}>
-        <Flex align="center" justify="space-between">
-          <Stack isInline align="center" spacing={4}>
-            <LikeButton subject={post} size="lg" />
-            <FontAwesomeIcon icon={faComment} size="lg" />
-            <FontAwesomeIcon icon={faPaperPlane} size="lg" />
-          </Stack>
-          <Flex>
-            <BookmarkButton post={post} size="lg" />
-          </Flex>
-        </Flex>
+        <Actions post={post} />
+
         {post.likes.pageInfo.total > 0 && (
           <Text fontSize="sm" fontWeight="semibold" pt={2}>
             {post.likes.pageInfo.total} me gusta
@@ -174,7 +166,6 @@ export function Post(props: PostProps) {
             <Text>{post.description}</Text>
           </Stack>
         </Flex>
-
         {post.comments.pageInfo.total > 0 && (
           <Text color="gray.500" fontSize="sm">
             Ver los {post.comments.pageInfo.total} comentarios
@@ -183,7 +174,6 @@ export function Post(props: PostProps) {
         {post.comments.edges
           .map((edge) => <Comment comment={edge.node} key={edge.node.id} />)
           .reverse()}
-
         <Text color="gray.500" fontSize="xs" mt={1} textTransform="uppercase">
           Hace 15 horas
         </Text>
