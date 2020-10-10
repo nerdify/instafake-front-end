@@ -23,7 +23,13 @@ import {Post_post$key} from './__generated__/Post_post.graphql'
 import {PostCreateCommentMutation} from './__generated__/PostCreateCommentMutation.graphql'
 
 import {PostModal} from 'components'
-import {BookmarkButton, Comment, Gallery, LikeButton} from './components'
+import {
+  BookmarkButton,
+  Comment,
+  CommentTextArea,
+  Gallery,
+  LikeButton,
+} from './components'
 
 interface PostProps {
   post: Post_post$key
@@ -188,50 +194,7 @@ export function Post(props: PostProps) {
           Hace 15 horas
         </Text>
       </Box>
-      <Flex
-        align="center"
-        borderTop="1px solid"
-        borderColor="gray.200"
-        position="relative"
-      >
-        <Textarea
-          as={TextareaAutosize}
-          border={0}
-          maxH="80px"
-          minH={6}
-          p={4}
-          placeholder="Agrega un comentario"
-          onChange={(e) => setTextareaValue(e.target.value)}
-          resize="none"
-          value={textareaValue}
-          variant="unstyled"
-        />
-        <Button
-          color="blue.200"
-          fontSize="sm"
-          isDisabled={textareaValue.trim().length === 0}
-          onClick={handleSubmitComment}
-          p={4}
-          variant="link"
-          _hover={{
-            textDecoration: `none`,
-          }}
-        >
-          Publicar
-        </Button>
-        {createCommentLoading && (
-          <Center
-            bg="whiteAlpha.500"
-            bottom={0}
-            left={0}
-            position="absolute"
-            right={0}
-            top={0}
-          >
-            <Spinner />
-          </Center>
-        )}
-      </Flex>
+      <CommentTextArea postId={post.id} />
     </Box>
   )
 }
