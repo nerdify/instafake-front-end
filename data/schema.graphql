@@ -1,6 +1,8 @@
 type Query {
   post(id: ID!): Post
   posts(
+    orderBy: [QueryPostsOrderByOrderByClause!]
+
     """Limits number of fetched elements."""
     first: Int!
 
@@ -8,6 +10,9 @@ type Query {
     after: String
   ): PostConnection
   user(id: ID!): User
+
+  """The currently authenticated user."""
+  viewer: User
   node(id: ID!): Node
 }
 
@@ -242,6 +247,19 @@ type Image {
 
 """An RFC 3986 and RFC 3987 compliant URI string."""
 scalar URI
+
+"""Order by clause for the `orderBy` argument on the query `posts`."""
+input QueryPostsOrderByOrderByClause {
+  """The column that is used for ordering."""
+  column: PostsOrderColumn!
+
+  """The direction that is used for ordering."""
+  order: SortOrder!
+}
+
+enum PostsOrderColumn {
+  CREATED_AT
+}
 
 type Mutation {
   createComment(input: CreateCommentInput!): CreateCommentPayload

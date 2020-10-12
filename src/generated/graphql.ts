@@ -54,6 +54,18 @@ export enum SortOrder {
 
 
 
+/** Order by clause for the `orderBy` argument on the query `posts`. */
+export type QueryPostsOrderByOrderByClause = {
+  /** The column that is used for ordering. */
+  column: PostsOrderColumn;
+  /** The direction that is used for ordering. */
+  order: SortOrder;
+};
+
+export enum PostsOrderColumn {
+  CREATED_AT = 'CREATED_AT'
+}
+
 
 export type CreateCommentInput = {
   postId: Scalars['ID'];

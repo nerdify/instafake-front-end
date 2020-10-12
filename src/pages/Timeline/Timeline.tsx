@@ -11,7 +11,7 @@ export function Timeline() {
   const {posts} = useLazyLoadQuery<TimelinePostsQuery>(
     graphql`
       query TimelinePostsQuery {
-        posts(first: 10) {
+        posts(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {
           edges {
             node {
               ...Post_post
