@@ -1,4 +1,5 @@
 export * from './Actions'
 export * from './Comment'
+export * from './CommentTextArea'
 export * from './Gallery'
 export * from './LikeButton'
