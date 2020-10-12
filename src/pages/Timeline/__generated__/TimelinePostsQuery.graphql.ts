@@ -24,7 +24,7 @@ export type TimelinePostsQuery = {
 
 /*
 query TimelinePostsQuery {
-  posts(first: 10) {
+  posts(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {
     edges {
       node {
         ...Post_post
@@ -109,43 +109,45 @@ fragment Post_post on Post {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
+var v0 = {
+  "kind": "Literal",
+  "name": "orderBy",
+  "value": {
+    "column": "CREATED_AT",
+    "order": "DESC"
+  }
+},
+v1 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 10
-  }
+  },
+  (v0/*: any*/)
 ],
-v1 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v2 = [
+v3 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 3
   },
-  {
-    "kind": "Literal",
-    "name": "orderBy",
-    "value": {
-      "column": "CREATED_AT",
-      "order": "DESC"
-    }
-  }
+  (v0/*: any*/)
 ],
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "total",
   "storageKey": null
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "concreteType": "User",
@@ -160,25 +162,25 @@ v4 = {
       "name": "username",
       "storageKey": null
     },
-    (v1/*: any*/)
+    (v2/*: any*/)
   ],
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "viewerHasLiked",
+  "name": "__typename",
   "storageKey": null
 },
 v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "viewerHasLiked",
+  "storageKey": null
+},
+v8 = {
   "alias": null,
   "args": [
     {
@@ -200,7 +202,7 @@ v7 = {
       "name": "pageInfo",
       "plural": false,
       "selections": [
-        (v3/*: any*/)
+        (v4/*: any*/)
       ],
       "storageKey": null
     }
@@ -216,7 +218,7 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "PostConnection",
         "kind": "LinkedField",
         "name": "posts",
@@ -238,7 +240,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v1/*: any*/),
+                  (v2/*: any*/),
                   {
                     "args": null,
                     "kind": "FragmentSpread",
@@ -251,7 +253,7 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "posts(first:10)"
+        "storageKey": "posts(first:10,orderBy:{\"column\":\"CREATED_AT\",\"order\":\"DESC\"})"
       }
     ],
     "type": "Query",
@@ -265,7 +267,7 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "PostConnection",
         "kind": "LinkedField",
         "name": "posts",
@@ -287,7 +289,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v1/*: any*/),
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -304,7 +306,7 @@ return {
                   },
                   {
                     "alias": null,
-                    "args": (v2/*: any*/),
+                    "args": (v3/*: any*/),
                     "concreteType": "CommentConnection",
                     "kind": "LinkedField",
                     "name": "comments",
@@ -318,7 +320,7 @@ return {
                         "name": "pageInfo",
                         "plural": false,
                         "selections": [
-                          (v3/*: any*/),
+                          (v4/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -359,17 +361,17 @@ return {
                                 "name": "text",
                                 "storageKey": null
                               },
-                              (v4/*: any*/),
-                              (v1/*: any*/),
                               (v5/*: any*/),
+                              (v2/*: any*/),
+                              (v6/*: any*/),
                               {
                                 "kind": "InlineFragment",
                                 "selections": [
-                                  (v6/*: any*/),
+                                  (v7/*: any*/),
                                   {
                                     "kind": "InlineFragment",
                                     "selections": [
-                                      (v7/*: any*/)
+                                      (v8/*: any*/)
                                     ],
                                     "type": "Post",
                                     "abstractKey": null
@@ -396,7 +398,7 @@ return {
                   },
                   {
                     "alias": null,
-                    "args": (v2/*: any*/),
+                    "args": (v3/*: any*/),
                     "filters": [],
                     "handle": "connection",
                     "key": "Post_comments",
@@ -421,13 +423,13 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v7/*: any*/),
-                  (v4/*: any*/),
+                  (v8/*: any*/),
+                  (v5/*: any*/),
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v5/*: any*/),
-                      (v6/*: any*/)
+                      (v6/*: any*/),
+                      (v7/*: any*/)
                     ],
                     "type": "Likeable",
                     "abstractKey": "__isLikeable"
@@ -439,19 +441,19 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "posts(first:10)"
+        "storageKey": "posts(first:10,orderBy:{\"column\":\"CREATED_AT\",\"order\":\"DESC\"})"
       }
     ]
   },
   "params": {
-    "cacheID": "b599965163cd0869348e5df6ed2121ab",
+    "cacheID": "ed0636140199c08d904db11028588501",
     "id": null,
     "metadata": {},
     "name": "TimelinePostsQuery",
     "operationKind": "query",
-    "text": "query TimelinePostsQuery {\n  posts(first: 10) {\n    edges {\n      node {\n        ...Post_post\n        id\n      }\n    }\n  }\n}\n\nfragment Actions_post on Post {\n  ...BookmarkButton_post\n  ...LikeButton_subject\n}\n\nfragment BookmarkButton_post on Post {\n  id\n  viewerHasBookmarked\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post on Post {\n  ...Actions_post\n  description\n  id\n  comments(first: 3, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...Comment_comment\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  images {\n    ...Gallery_images\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
+    "text": "query TimelinePostsQuery {\n  posts(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {\n    edges {\n      node {\n        ...Post_post\n        id\n      }\n    }\n  }\n}\n\nfragment Actions_post on Post {\n  ...BookmarkButton_post\n  ...LikeButton_subject\n}\n\nfragment BookmarkButton_post on Post {\n  id\n  viewerHasBookmarked\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post on Post {\n  ...Actions_post\n  description\n  id\n  comments(first: 3, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...Comment_comment\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  images {\n    ...Gallery_images\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b748b069720dfcd93719fc313555d13c';
+(node as any).hash = '985444324bf4a545a2c61bedc88a9184';
 export default node;
