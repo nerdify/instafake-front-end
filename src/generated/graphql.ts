@@ -80,12 +80,15 @@ export type AddLikeInput = {
 
 
 export type CreateBookmarkInput = {
+  /** The post id for save has a bookmark. */
   postId: Scalars['ID'];
 };
 
 
 export type CreatePostInput = {
+  /** All photos for create a new post. */
   photos: Array<Scalars['Upload']>;
+  /** Text comment for the new post. */
   text: Scalars['String'];
 };
 

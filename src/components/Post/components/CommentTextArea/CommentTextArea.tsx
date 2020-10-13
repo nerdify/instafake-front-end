@@ -1,18 +1,27 @@
 import React, {useState} from 'react'
 import {useMutation} from 'react-relay-mutation'
-import {graphql} from 'react-relay/hooks'
+import {graphql, useFragment} from 'react-relay/hooks'
 
 import {Flex, Textarea, Button, Center, Spinner} from '@chakra-ui/core'
 import TextareaAutosize from 'react-textarea-autosize'
 
 import {CommentTextAreaCreateCommentMutation} from './__generated__/CommentTextAreaCreateCommentMutation.graphql'
-
+import {CommentTextArea_post$key} from './__generated__/CommentTextArea_post.graphql'
 interface CommentTextAreaProps {
-  postId: string
+  post: CommentTextArea_post$key
 }
 
-export function CommentTextArea(props: CommentTextAreaProps) {
+export function CommentTextArea({post: _post}: CommentTextAreaProps) {
   const [textareaValue, setTextareaValue] = useState(``)
+
+  const post = useFragment(
+    graphql`
+      fragment CommentTextArea_post on Post {
+        id
+      }
+    `,
+    _post
+  )
 
   const [createCommentCommit, {loading: createCommentLoading}] = useMutation<
     CommentTextAreaCreateCommentMutation
@@ -36,7 +45,7 @@ export function CommentTextArea(props: CommentTextAreaProps) {
     createCommentCommit({
       variables: {
         input: {
-          postId: `UG9zdDoxCg==`,
+          postId: post.id,
           text: textareaValue,
           userId: `VXNlcjoxCg==`,
         },
@@ -44,7 +53,7 @@ export function CommentTextArea(props: CommentTextAreaProps) {
       configs: [
         {
           edgeName: `commentEdge`,
-          parentID: props.postId,
+          parentID: post.id,
           type: `RANGE_ADD`,
           connectionInfo: [
             {

@@ -21,6 +21,7 @@ export function Post(props: PostProps) {
     graphql`
       fragment Post_post on Post {
         ...Actions_post
+        ...CommentTextArea_post
 
         description
         id
@@ -119,7 +120,7 @@ export function Post(props: PostProps) {
           Hace 15 horas
         </Text>
       </Box>
-      <CommentTextArea postId={post.id} />
+      <CommentTextArea post={post} />
     </Box>
   )
 }
