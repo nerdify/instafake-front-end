@@ -1,5 +1,8 @@
 type Query {
+  """Get a post from a given id."""
   post(id: ID!): Post
+
+  """Get all posts sort by enum column"""
   posts(
     orderBy: [QueryPostsOrderByOrderByClause!]
 
@@ -9,10 +12,9 @@ type Query {
     """A cursor after which elements are returned."""
     after: String
   ): PostConnection
-  user(id: ID!): User
 
-  """The currently authenticated user."""
-  viewer: User
+  """Get an user from an id."""
+  user(id: ID!): User
   node(id: ID!): Node
 }
 
@@ -71,7 +73,7 @@ interface Likeable {
 type Like implements Node {
   id: ID!
 
-  """"""
+  """The like entity for post or comments."""
   likeable: Likeable!
 
   """User that created the like."""
@@ -242,6 +244,7 @@ type LikeEdge {
 }
 
 type Image {
+  """The url of the image from a post"""
   url: URI!
 }
 
@@ -289,6 +292,7 @@ type AddLikePayload {
 }
 
 input CreateBookmarkInput {
+  """The post id for save has a bookmark."""
   postId: ID!
 }
 
@@ -297,7 +301,10 @@ type CreateBookmarkPayload {
 }
 
 input CreatePostInput {
+  """All photos for create a new post."""
   photos: [Upload!]!
+
+  """Text comment for the new post."""
   text: String!
 }
 

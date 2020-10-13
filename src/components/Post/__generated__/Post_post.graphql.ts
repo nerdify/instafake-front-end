@@ -29,7 +29,7 @@ export type Post_post = {
     readonly user: {
         readonly username: string;
     };
-    readonly " $fragmentRefs": FragmentRefs<"Actions_post">;
+    readonly " $fragmentRefs": FragmentRefs<"Actions_post" | "CommentTextArea_post">;
     readonly " $refType": "Post_post";
 };
 export type Post_post$data = Post_post;
@@ -226,11 +226,16 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Actions_post"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "CommentTextArea_post"
     }
   ],
   "type": "Post",
   "abstractKey": null
 };
 })();
-(node as any).hash = 'f329ab3476097a69bb4343323d53d9b9';
+(node as any).hash = 'e1324a7aa6f3477861a57da2042bf255';
 export default node;
