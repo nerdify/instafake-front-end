@@ -7,7 +7,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import {Post_post$key} from './__generated__/Post_post.graphql'
 
-import {Actions, CommentLists, CommentTextArea, Gallery} from './components'
+import {Actions, CommentList, CommentTextArea, Gallery} from './components'
 
 import {PostModal} from 'components'
 
@@ -19,21 +19,20 @@ export function Post(props: PostProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const post = useFragment(
     graphql`
-      fragment Post_post on Post {
+      fragment Post_post on Post @argumentDefinitions(first: {type: "Int!"}) {
         ...Actions_post
         ...CommentTextArea_post
 
         description
         id
-        comments(first: 3, orderBy: {column: CREATED_AT, order: DESC})
+        comments(first: $first, orderBy: {column: CREATED_AT, order: DESC})
           @connection(filters: [], key: "Post_comments") {
           pageInfo {
             total
           }
           edges {
             node {
-              ...Comment_comment
-              id
+              ...CommentList_comments
             }
           }
         }
@@ -114,7 +113,7 @@ export function Post(props: PostProps) {
           </Text>
         )}
 
-        <CommentLists post={post} />
+        <CommentList comments={post.comments.edges.map((edge) => edge.node)} />
 
         <Text color="gray.500" fontSize="xs" mt={1} textTransform="uppercase">
           Hace 15 horas
