@@ -1,12 +1,19 @@
 type Query {
+  """Get a post from a given id."""
   post(id: ID!): Post
+
+  """Get all posts sort by enum column"""
   posts(
+    orderBy: [QueryPostsOrderByOrderByClause!]
+
     """Limits number of fetched elements."""
     first: Int!
 
     """A cursor after which elements are returned."""
     after: String
   ): PostConnection
+
+  """Get an user from an id."""
   user(id: ID!): User
   node(id: ID!): Node
 }
@@ -66,7 +73,7 @@ interface Likeable {
 type Like implements Node {
   id: ID!
 
-  """"""
+  """The like entity for post or comments."""
   likeable: Likeable!
 
   """User that created the like."""
@@ -237,11 +244,25 @@ type LikeEdge {
 }
 
 type Image {
+  """The url of the image from a post"""
   url: URI!
 }
 
 """An RFC 3986 and RFC 3987 compliant URI string."""
 scalar URI
+
+"""Order by clause for the `orderBy` argument on the query `posts`."""
+input QueryPostsOrderByOrderByClause {
+  """The column that is used for ordering."""
+  column: PostsOrderColumn!
+
+  """The direction that is used for ordering."""
+  order: SortOrder!
+}
+
+enum PostsOrderColumn {
+  CREATED_AT
+}
 
 type Mutation {
   createComment(input: CreateCommentInput!): CreateCommentPayload
@@ -271,6 +292,7 @@ type AddLikePayload {
 }
 
 input CreateBookmarkInput {
+  """The post id for save has a bookmark."""
   postId: ID!
 }
 
@@ -279,7 +301,10 @@ type CreateBookmarkPayload {
 }
 
 input CreatePostInput {
+  """All photos for create a new post."""
   photos: [Upload!]!
+
+  """Text comment for the new post."""
   text: String!
 }
 

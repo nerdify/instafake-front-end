@@ -1,4 +1,5 @@
 export * from './BookmarkButton'
 export * from './Comment'
+export * from './CommentLists'
 export * from './Gallery'
 export * from './LikeButton'

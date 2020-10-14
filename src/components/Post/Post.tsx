@@ -23,7 +23,7 @@ import {Post_post$key} from './__generated__/Post_post.graphql'
 import {PostCreateCommentMutation} from './__generated__/PostCreateCommentMutation.graphql'
 
 import {PostModal} from 'components'
-import {BookmarkButton, Comment, Gallery, LikeButton} from './components'
+import {BookmarkButton, CommentLists, Gallery, LikeButton} from './components'
 
 interface PostProps {
   post: Post_post$key
@@ -180,9 +180,8 @@ export function Post(props: PostProps) {
             Ver los {post.comments.pageInfo.total} comentarios
           </Text>
         )}
-        {post.comments.edges
-          .map((edge) => <Comment comment={edge.node} key={edge.node.id} />)
-          .reverse()}
+
+        <CommentLists post={post} />
 
         <Text color="gray.500" fontSize="xs" mt={1} textTransform="uppercase">
           Hace 15 horas
