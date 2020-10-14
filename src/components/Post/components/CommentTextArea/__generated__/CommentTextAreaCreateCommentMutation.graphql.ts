@@ -9,10 +9,10 @@ export type CreateCommentInput = {
     text: string;
     userId: string;
 };
-export type PostCreateCommentMutationVariables = {
+export type CommentTextAreaCreateCommentMutationVariables = {
     input: CreateCommentInput;
 };
-export type PostCreateCommentMutationResponse = {
+export type CommentTextAreaCreateCommentMutationResponse = {
     readonly createComment: {
         readonly commentEdge: {
             readonly node: {
@@ -25,15 +25,15 @@ export type PostCreateCommentMutationResponse = {
         };
     } | null;
 };
-export type PostCreateCommentMutation = {
-    readonly response: PostCreateCommentMutationResponse;
-    readonly variables: PostCreateCommentMutationVariables;
+export type CommentTextAreaCreateCommentMutation = {
+    readonly response: CommentTextAreaCreateCommentMutationResponse;
+    readonly variables: CommentTextAreaCreateCommentMutationVariables;
 };
 
 
 
 /*
-mutation PostCreateCommentMutation(
+mutation CommentTextAreaCreateCommentMutation(
   $input: CreateCommentInput!
 ) {
   createComment(input: $input) {
@@ -110,7 +110,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PostCreateCommentMutation",
+    "name": "CommentTextAreaCreateCommentMutation",
     "selections": [
       {
         "alias": null,
@@ -171,7 +171,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PostCreateCommentMutation",
+    "name": "CommentTextAreaCreateCommentMutation",
     "selections": [
       {
         "alias": null,
@@ -287,14 +287,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "777923c29b30381809400fb80fc90421",
+    "cacheID": "50cbb117c662c1c87e234f07e563ef8c",
     "id": null,
     "metadata": {},
-    "name": "PostCreateCommentMutation",
+    "name": "CommentTextAreaCreateCommentMutation",
     "operationKind": "mutation",
-    "text": "mutation PostCreateCommentMutation(\n  $input: CreateCommentInput!\n) {\n  createComment(input: $input) {\n    commentEdge {\n      node {\n        ...LikeButton_subject\n        text\n        user {\n          username\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n"
+    "text": "mutation CommentTextAreaCreateCommentMutation(\n  $input: CreateCommentInput!\n) {\n  createComment(input: $input) {\n    commentEdge {\n      node {\n        ...LikeButton_subject\n        text\n        user {\n          username\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '0e68ad79c034a6b0c243204af537056b';
+(node as any).hash = '490ed0b0803539daa2633c92b11fe044';
 export default node;

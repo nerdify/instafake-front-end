@@ -1,42 +1,28 @@
 /* eslint relay/must-colocate-fragment-spreads: off */
 import React, {useState} from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
-import {useMutation} from 'react-relay-mutation'
-import TextareaAutosize from 'react-textarea-autosize'
-import {
-  Avatar,
-  Box,
-  Button,
-  Center,
-  Flex,
-  Heading,
-  Textarea,
-  Spinner,
-  Stack,
-  Text,
-} from '@chakra-ui/core'
+import {Avatar, Box, Flex, Heading, Stack, Text} from '@chakra-ui/core'
 import {faEllipsisH as falEllipsisH} from '@fortawesome/pro-light-svg-icons'
-import {faComment, faPaperPlane} from '@fortawesome/pro-regular-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import {Post_post$key} from './__generated__/Post_post.graphql'
-import {PostCreateCommentMutation} from './__generated__/PostCreateCommentMutation.graphql'
+
+import {Actions, CommentLists, CommentTextArea, Gallery} from './components'
 
 import {PostModal} from 'components'
-import {BookmarkButton, CommentLists, Gallery, LikeButton} from './components'
 
 interface PostProps {
   post: Post_post$key
 }
 
 export function Post(props: PostProps) {
-  const [textareaValue, setTextareaValue] = useState(``)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const post = useFragment(
     graphql`
       fragment Post_post on Post {
-        ...BookmarkButton_post
-        ...LikeButton_subject
+        ...Actions_post
+        ...CommentTextArea_post
+
         description
         id
         comments(first: 3, orderBy: {column: CREATED_AT, order: DESC})
@@ -66,51 +52,6 @@ export function Post(props: PostProps) {
     `,
     props.post
   )
-  const [createCommentCommit, {loading: createCommentLoading}] = useMutation<
-    PostCreateCommentMutation
-  >(graphql`
-    mutation PostCreateCommentMutation($input: CreateCommentInput!) {
-      createComment(input: $input) {
-        commentEdge {
-          node {
-            ...LikeButton_subject
-            text
-            user {
-              username
-            }
-          }
-        }
-      }
-    }
-  `)
-
-  function handleSubmitComment() {
-    createCommentCommit({
-      variables: {
-        input: {
-          postId: `UG9zdDoxCg==`,
-          text: textareaValue,
-          userId: `VXNlcjoxCg==`,
-        },
-      },
-      configs: [
-        {
-          edgeName: `commentEdge`,
-          parentID: post.id,
-          type: `RANGE_ADD`,
-          connectionInfo: [
-            {
-              key: `Post_comments`,
-              rangeBehavior: `prepend`,
-            },
-          ],
-        },
-      ],
-      onCompleted: () => {
-        setTextareaValue(``)
-      },
-    })
-  }
 
   return (
     <Box bg="white" border="1px solid" borderColor="gray.200" borderRadius="md">
@@ -152,17 +93,10 @@ export function Post(props: PostProps) {
         <FontAwesomeIcon icon={falEllipsisH} size="2x" />
       </Flex>
       <Gallery images={post.images} />
+
       <Box p={4}>
-        <Flex align="center" justify="space-between">
-          <Stack isInline align="center" spacing={4}>
-            <LikeButton subject={post} size="lg" />
-            <FontAwesomeIcon icon={faComment} size="lg" />
-            <FontAwesomeIcon icon={faPaperPlane} size="lg" />
-          </Stack>
-          <Flex>
-            <BookmarkButton post={post} size="lg" />
-          </Flex>
-        </Flex>
+        <Actions post={post} />
+
         {post.likes.pageInfo.total > 0 && (
           <Text fontSize="sm" fontWeight="semibold" pt={2}>
             {post.likes.pageInfo.total} me gusta
@@ -174,7 +108,6 @@ export function Post(props: PostProps) {
             <Text>{post.description}</Text>
           </Stack>
         </Flex>
-
         {post.comments.pageInfo.total > 0 && (
           <Text color="gray.500" fontSize="sm">
             Ver los {post.comments.pageInfo.total} comentarios
@@ -187,50 +120,7 @@ export function Post(props: PostProps) {
           Hace 15 horas
         </Text>
       </Box>
-      <Flex
-        align="center"
-        borderTop="1px solid"
-        borderColor="gray.200"
-        position="relative"
-      >
-        <Textarea
-          as={TextareaAutosize}
-          border={0}
-          maxH="80px"
-          minH={6}
-          p={4}
-          placeholder="Agrega un comentario"
-          onChange={(e) => setTextareaValue(e.target.value)}
-          resize="none"
-          value={textareaValue}
-          variant="unstyled"
-        />
-        <Button
-          color="blue.200"
-          fontSize="sm"
-          isDisabled={textareaValue.trim().length === 0}
-          onClick={handleSubmitComment}
-          p={4}
-          variant="link"
-          _hover={{
-            textDecoration: `none`,
-          }}
-        >
-          Publicar
-        </Button>
-        {createCommentLoading && (
-          <Center
-            bg="whiteAlpha.500"
-            bottom={0}
-            left={0}
-            position="absolute"
-            right={0}
-            top={0}
-          >
-            <Spinner />
-          </Center>
-        )}
-      </Flex>
+      <CommentTextArea post={post} />
     </Box>
   )
 }
