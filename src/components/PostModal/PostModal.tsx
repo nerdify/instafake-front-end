@@ -32,7 +32,7 @@ function PostModalBody({postId}: PostModalProps) {
     graphql`
       query PostModalPostQuery($id: ID!) {
         post(id: $id) {
-          ...Post_post
+          ...Post_post @arguments(first: 10)
         }
       }
     `,
