@@ -7,7 +7,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 import {Post_post$key} from './__generated__/Post_post.graphql'
 
-import {Actions, Comment, CommentTextArea, Gallery} from './components'
+import {Actions, Comment, CommentTextArea, Gallery, Header} from './components'
 
 import {PostModal} from 'components'
 
@@ -64,6 +64,7 @@ export function Post(props: PostProps) {
         Open in modal...
       </button>
       {isModalOpen && <PostModal postId={post.id} />}
+      <Header />
       <Flex
         justify="space-between"
         align="center"
