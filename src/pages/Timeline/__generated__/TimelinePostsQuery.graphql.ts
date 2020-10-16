@@ -27,7 +27,7 @@ query TimelinePostsQuery {
   posts(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {
     edges {
       node {
-        ...Post_post
+        ...Post_post_4yQIxA
         id
       }
     }
@@ -42,6 +42,11 @@ fragment Actions_post on Post {
 fragment BookmarkButton_post on Post {
   id
   viewerHasBookmarked
+}
+
+fragment CommentList_comments on Comment {
+  ...Comment_comment
+  id
 }
 
 fragment CommentTextArea_post on Post {
@@ -61,6 +66,13 @@ fragment Gallery_images on Image {
   url
 }
 
+fragment Header_post on Post {
+  user {
+    username
+    id
+  }
+}
+
 fragment LikeButton_subject on Likeable {
   __isLikeable: __typename
   __typename
@@ -78,9 +90,10 @@ fragment LikeButton_subject on Likeable {
   }
 }
 
-fragment Post_post on Post {
+fragment Post_post_4yQIxA on Post {
   ...Actions_post
   ...CommentTextArea_post
+  ...Header_post
   description
   id
   comments(first: 3, orderBy: {column: CREATED_AT, order: DESC}) {
@@ -91,7 +104,7 @@ fragment Post_post on Post {
     }
     edges {
       node {
-        ...Comment_comment
+        ...CommentList_comments
         id
         __typename
       }
@@ -137,22 +150,12 @@ v2 = {
   "name": "id",
   "storageKey": null
 },
-v3 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 3
-  },
-  (v0/*: any*/)
-],
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "total",
-  "storageKey": null
+v3 = {
+  "kind": "Literal",
+  "name": "first",
+  "value": 3
 },
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "concreteType": "User",
@@ -171,21 +174,32 @@ v5 = {
   ],
   "storageKey": null
 },
+v5 = [
+  (v3/*: any*/),
+  (v0/*: any*/)
+],
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
+  "name": "total",
   "storageKey": null
 },
 v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "viewerHasLiked",
+  "name": "__typename",
   "storageKey": null
 },
 v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "viewerHasLiked",
+  "storageKey": null
+},
+v9 = {
   "alias": null,
   "args": [
     {
@@ -207,7 +221,7 @@ v8 = {
       "name": "pageInfo",
       "plural": false,
       "selections": [
-        (v4/*: any*/)
+        (v6/*: any*/)
       ],
       "storageKey": null
     }
@@ -247,7 +261,9 @@ return {
                 "selections": [
                   (v2/*: any*/),
                   {
-                    "args": null,
+                    "args": [
+                      (v3/*: any*/)
+                    ],
                     "kind": "FragmentSpread",
                     "name": "Post_post"
                   }
@@ -302,6 +318,7 @@ return {
                     "name": "viewerHasBookmarked",
                     "storageKey": null
                   },
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -311,7 +328,7 @@ return {
                   },
                   {
                     "alias": null,
-                    "args": (v3/*: any*/),
+                    "args": (v5/*: any*/),
                     "concreteType": "CommentConnection",
                     "kind": "LinkedField",
                     "name": "comments",
@@ -325,7 +342,7 @@ return {
                         "name": "pageInfo",
                         "plural": false,
                         "selections": [
-                          (v4/*: any*/),
+                          (v6/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -366,17 +383,17 @@ return {
                                 "name": "text",
                                 "storageKey": null
                               },
-                              (v5/*: any*/),
+                              (v4/*: any*/),
                               (v2/*: any*/),
-                              (v6/*: any*/),
+                              (v7/*: any*/),
                               {
                                 "kind": "InlineFragment",
                                 "selections": [
-                                  (v7/*: any*/),
+                                  (v8/*: any*/),
                                   {
                                     "kind": "InlineFragment",
                                     "selections": [
-                                      (v8/*: any*/)
+                                      (v9/*: any*/)
                                     ],
                                     "type": "Post",
                                     "abstractKey": null
@@ -403,7 +420,7 @@ return {
                   },
                   {
                     "alias": null,
-                    "args": (v3/*: any*/),
+                    "args": (v5/*: any*/),
                     "filters": [],
                     "handle": "connection",
                     "key": "Post_comments",
@@ -428,13 +445,12 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v8/*: any*/),
-                  (v5/*: any*/),
+                  (v9/*: any*/),
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v6/*: any*/),
-                      (v7/*: any*/)
+                      (v7/*: any*/),
+                      (v8/*: any*/)
                     ],
                     "type": "Likeable",
                     "abstractKey": "__isLikeable"
@@ -451,14 +467,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4d71389bcfcf162e427057a506b4bc79",
+    "cacheID": "1d486981128bfd1660a6ff30122f6d70",
     "id": null,
     "metadata": {},
     "name": "TimelinePostsQuery",
     "operationKind": "query",
-    "text": "query TimelinePostsQuery {\n  posts(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {\n    edges {\n      node {\n        ...Post_post\n        id\n      }\n    }\n  }\n}\n\nfragment Actions_post on Post {\n  ...BookmarkButton_post\n  ...LikeButton_subject\n}\n\nfragment BookmarkButton_post on Post {\n  id\n  viewerHasBookmarked\n}\n\nfragment CommentTextArea_post on Post {\n  id\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post on Post {\n  ...Actions_post\n  ...CommentTextArea_post\n  description\n  id\n  comments(first: 3, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...Comment_comment\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  images {\n    ...Gallery_images\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
+    "text": "query TimelinePostsQuery {\n  posts(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {\n    edges {\n      node {\n        ...Post_post_4yQIxA\n        id\n      }\n    }\n  }\n}\n\nfragment Actions_post on Post {\n  ...BookmarkButton_post\n  ...LikeButton_subject\n}\n\nfragment BookmarkButton_post on Post {\n  id\n  viewerHasBookmarked\n}\n\nfragment CommentList_comments on Comment {\n  ...Comment_comment\n  id\n}\n\nfragment CommentTextArea_post on Post {\n  id\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment Header_post on Post {\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post_4yQIxA on Post {\n  ...Actions_post\n  ...CommentTextArea_post\n  ...Header_post\n  description\n  id\n  comments(first: 3, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...CommentList_comments\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  images {\n    ...Gallery_images\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '985444324bf4a545a2c61bedc88a9184';
+(node as any).hash = 'd83bb458a4592e5b0727922fba422955';
 export default node;
