@@ -30,6 +30,9 @@ type Post implements Likeable & Node {
     after: String
   ): CommentConnection
 
+  """Post Root Comment"""
+  rootComment: Comment
+
   """The post's description."""
   description: String
   id: ID!
