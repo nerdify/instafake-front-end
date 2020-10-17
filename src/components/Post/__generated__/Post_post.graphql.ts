@@ -10,16 +10,6 @@ export type Post_post = {
     readonly rootComment: {
         readonly " $fragmentRefs": FragmentRefs<"Comment_comment">;
     } | null;
-    readonly comments: {
-        readonly pageInfo: {
-            readonly total: number | null;
-        };
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly " $fragmentRefs": FragmentRefs<"CommentList_comments">;
-            } | null;
-        } | null> | null;
-    } | null;
     readonly images: ReadonlyArray<{
         readonly " $fragmentRefs": FragmentRefs<"Gallery_images">;
     }>;
@@ -28,7 +18,7 @@ export type Post_post = {
             readonly total: number | null;
         };
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"Actions_post" | "CommentTextArea_post" | "Header_post">;
+    readonly " $fragmentRefs": FragmentRefs<"Actions_post" | "CommentList_post" | "CommentTextArea_post" | "Header_post">;
     readonly " $refType": "Post_post";
 };
 export type Post_post$data = Post_post;
@@ -39,15 +29,7 @@ export type Post_post$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "total",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -56,18 +38,7 @@ return {
     }
   ],
   "kind": "Fragment",
-  "metadata": {
-    "connection": [
-      {
-        "count": "first",
-        "cursor": null,
-        "direction": "forward",
-        "path": [
-          "comments"
-        ]
-      }
-    ]
-  },
+  "metadata": null,
   "name": "Post_post",
   "selections": [
     {
@@ -96,84 +67,6 @@ return {
           "args": null,
           "kind": "FragmentSpread",
           "name": "Comment_comment"
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": "comments",
-      "args": null,
-      "concreteType": "CommentConnection",
-      "kind": "LinkedField",
-      "name": "__Post_comments_connection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "PageInfo",
-          "kind": "LinkedField",
-          "name": "pageInfo",
-          "plural": false,
-          "selections": [
-            (v0/*: any*/),
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "endCursor",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "hasNextPage",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "CommentEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Comment",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "__typename",
-                  "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "CommentList_comments"
-                }
-              ],
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "cursor",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
         }
       ],
       "storageKey": null
@@ -216,7 +109,13 @@ return {
           "name": "pageInfo",
           "plural": false,
           "selections": [
-            (v0/*: any*/)
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "total",
+              "storageKey": null
+            }
           ],
           "storageKey": null
         }
@@ -227,6 +126,17 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Actions_post"
+    },
+    {
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "first",
+          "variableName": "first"
+        }
+      ],
+      "kind": "FragmentSpread",
+      "name": "CommentList_post"
     },
     {
       "args": null,
@@ -242,6 +152,5 @@ return {
   "type": "Post",
   "abstractKey": null
 };
-})();
-(node as any).hash = 'b8a93937633118df6f431acfdfa8db5a';
+(node as any).hash = '1536bf961165a238099cdccab9cedf4a';
 export default node;
