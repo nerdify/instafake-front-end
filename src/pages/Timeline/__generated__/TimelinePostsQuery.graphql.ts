@@ -27,7 +27,7 @@ query TimelinePostsQuery {
   posts(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {
     edges {
       node {
-        ...Post_post_4yQIxA
+        ...Post_post_2pB9HF
         id
       }
     }
@@ -90,7 +90,7 @@ fragment LikeButton_subject on Likeable {
   }
 }
 
-fragment Post_post_4yQIxA on Post {
+fragment Post_post_2pB9HF on Post {
   ...Actions_post
   ...CommentTextArea_post
   ...Header_post
@@ -100,7 +100,7 @@ fragment Post_post_4yQIxA on Post {
     ...Comment_comment
     id
   }
-  comments(first: 3, orderBy: {column: CREATED_AT, order: DESC}) {
+  comments(first: 2, orderBy: {column: CREATED_AT, order: DESC}) {
     pageInfo {
       total
       endCursor
@@ -153,7 +153,7 @@ v2 = {
 v3 = {
   "kind": "Literal",
   "name": "first",
-  "value": 3
+  "value": 2
 },
 v4 = {
   "alias": null,
@@ -442,7 +442,7 @@ return {
                         "storageKey": null
                       }
                     ],
-                    "storageKey": "comments(first:3,orderBy:{\"column\":\"CREATED_AT\",\"order\":\"DESC\"})"
+                    "storageKey": "comments(first:2,orderBy:{\"column\":\"CREATED_AT\",\"order\":\"DESC\"})"
                   },
                   {
                     "alias": null,
@@ -493,14 +493,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f8042cfecc97c3decf9e69c7416b8444",
+    "cacheID": "cd0ed4f48e3289309ff8c8689b2ba070",
     "id": null,
     "metadata": {},
     "name": "TimelinePostsQuery",
     "operationKind": "query",
-    "text": "query TimelinePostsQuery {\n  posts(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {\n    edges {\n      node {\n        ...Post_post_4yQIxA\n        id\n      }\n    }\n  }\n}\n\nfragment Actions_post on Post {\n  ...BookmarkButton_post\n  ...LikeButton_subject\n}\n\nfragment BookmarkButton_post on Post {\n  id\n  viewerHasBookmarked\n}\n\nfragment CommentList_comments on Comment {\n  ...Comment_comment\n  id\n}\n\nfragment CommentTextArea_post on Post {\n  id\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment Header_post on Post {\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post_4yQIxA on Post {\n  ...Actions_post\n  ...CommentTextArea_post\n  ...Header_post\n  description\n  id\n  rootComment {\n    ...Comment_comment\n    id\n  }\n  comments(first: 3, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...CommentList_comments\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  images {\n    ...Gallery_images\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n}\n"
+    "text": "query TimelinePostsQuery {\n  posts(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {\n    edges {\n      node {\n        ...Post_post_2pB9HF\n        id\n      }\n    }\n  }\n}\n\nfragment Actions_post on Post {\n  ...BookmarkButton_post\n  ...LikeButton_subject\n}\n\nfragment BookmarkButton_post on Post {\n  id\n  viewerHasBookmarked\n}\n\nfragment CommentList_comments on Comment {\n  ...Comment_comment\n  id\n}\n\nfragment CommentTextArea_post on Post {\n  id\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment Header_post on Post {\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post_2pB9HF on Post {\n  ...Actions_post\n  ...CommentTextArea_post\n  ...Header_post\n  description\n  id\n  rootComment {\n    ...Comment_comment\n    id\n  }\n  comments(first: 2, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...CommentList_comments\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  images {\n    ...Gallery_images\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd83bb458a4592e5b0727922fba422955';
+(node as any).hash = '489500c178df8f38efcb8c7e06e76b38';
 export default node;

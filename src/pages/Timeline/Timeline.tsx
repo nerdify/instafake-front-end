@@ -14,7 +14,7 @@ export function Timeline() {
         posts(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {
           edges {
             node {
-              ...Post_post @arguments(first: 3)
+              ...Post_post @arguments(first: 2)
               id
             }
           }
