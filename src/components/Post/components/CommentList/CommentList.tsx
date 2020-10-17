@@ -1,5 +1,6 @@
 import React from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
+import {Box, Text} from '@chakra-ui/core'
 import {Comment} from '../Comment'
 
 export function CommentList(props) {
@@ -13,7 +14,17 @@ export function CommentList(props) {
     props.comments
   )
 
-  return comments
-    .map((comment) => <Comment comment={comment} key={comment.id} />)
-    .reverse()
+  return (
+    <Box>
+      {comments.length > 0 && (
+        <Text color="gray.500" fontSize="sm">
+          Ver los {comments.length} comentarios
+        </Text>
+      )}
+
+      {comments
+        .map((comment) => <Comment comment={comment} key={comment.id} />)
+        .reverse()}
+    </Box>
+  )
 }

@@ -79,12 +79,6 @@ export function Post(props: PostProps) {
           </Text>
         )}
 
-        {post.comments.pageInfo.total > 0 && (
-          <Text color="gray.500" fontSize="sm">
-            Ver los {post.comments.pageInfo.total} comentarios
-          </Text>
-        )}
-
         <CommentList comments={post.comments.edges.map((edge) => edge.node)} />
 
         <Text color="gray.500" fontSize="xs" mt={1} textTransform="uppercase">
