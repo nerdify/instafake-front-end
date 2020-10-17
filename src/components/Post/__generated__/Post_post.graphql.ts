@@ -25,9 +25,6 @@ export type Post_post = {
             readonly total: number | null;
         };
     } | null;
-    readonly user: {
-        readonly username: string;
-    };
     readonly " $fragmentRefs": FragmentRefs<"Actions_post" | "CommentTextArea_post" | "Header_post">;
     readonly " $refType": "Post_post";
 };
@@ -208,24 +205,6 @@ return {
       "storageKey": "likes(first:1)"
     },
     {
-      "alias": null,
-      "args": null,
-      "concreteType": "User",
-      "kind": "LinkedField",
-      "name": "user",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "username",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Actions_post"
@@ -245,5 +224,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = 'cb09016d9bb7a47ed29dfb29bf4fb1f8';
+(node as any).hash = '1f154b27385adf6da0b67b306ae918eb';
 export default node;

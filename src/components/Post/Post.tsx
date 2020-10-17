@@ -49,9 +49,6 @@ export function Post(props: PostProps) {
             total
           }
         }
-        user {
-          username
-        }
       }
     `,
     props.post
@@ -81,12 +78,7 @@ export function Post(props: PostProps) {
             {post.likes.pageInfo.total} me gusta
           </Text>
         )}
-        <Flex>
-          <Stack isInline fontSize="sm" pt={1} spacing={1}>
-            <Text fontWeight="semibold">{post.user.username}</Text>
-            <Text>{post.description}</Text>
-          </Stack>
-        </Flex>
+
         {post.comments.pageInfo.total > 0 && (
           <Text color="gray.500" fontSize="sm">
             Ver los {post.comments.pageInfo.total} comentarios
