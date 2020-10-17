@@ -1,7 +1,7 @@
 /* eslint relay/must-colocate-fragment-spreads: off */
 import React, {useState} from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
-import {Box, Flex, Stack, Text} from '@chakra-ui/core'
+import {Box, Text} from '@chakra-ui/core'
 
 import {Post_post$key} from './__generated__/Post_post.graphql'
 
