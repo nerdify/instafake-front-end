@@ -1,3 +1,4 @@
+/* eslint relay/must-colocate-fragment-spreads:0 */
 import React, {useMemo, useState} from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
 import {Box, Stack, Text} from '@chakra-ui/core'

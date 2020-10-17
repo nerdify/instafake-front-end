@@ -5,7 +5,6 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Post_post = {
-    readonly description: string | null;
     readonly id: string;
     readonly comments: {
         readonly pageInfo: {
@@ -67,13 +66,6 @@ return {
   },
   "name": "Post_post",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "description",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -224,5 +216,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '1f154b27385adf6da0b67b306ae918eb';
+(node as any).hash = 'ddd59e049f6a140eece8248f4e230dfb';
 export default node;
