@@ -7,6 +7,7 @@ import {Post_post$key} from './__generated__/Post_post.graphql'
 
 import {
   Actions,
+  Comment,
   CommentList,
   CommentTextArea,
   Gallery,
@@ -30,6 +31,9 @@ export function Post(props: PostProps) {
 
         description
         id
+        rootComment {
+          ...Comment_comment
+        }
         comments(first: $first, orderBy: {column: CREATED_AT, order: DESC})
           @connection(filters: [], key: "Post_comments") {
           pageInfo {
@@ -79,6 +83,7 @@ export function Post(props: PostProps) {
           </Text>
         )}
 
+        {post.rootComment && <Comment comment={post.rootComment} />}
         {post.comments.pageInfo.total > 0 && (
           <Text color="gray.500" fontSize="sm">
             Ver los {post.comments.pageInfo.total} comentarios
