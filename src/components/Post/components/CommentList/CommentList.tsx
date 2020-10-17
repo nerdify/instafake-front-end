@@ -1,7 +1,8 @@
 import React from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
+import {Box, Text} from '@chakra-ui/core'
+
 import {Comment} from '../Comment'
-import {Text} from '@chakra-ui/core'
 
 export function CommentList({post}) {
   const {comments} = useFragment(
@@ -27,7 +28,7 @@ export function CommentList({post}) {
   )
 
   return (
-    <div>
+    <Box>
       {comments.pageInfo.total > 0 && (
         <Text color="gray.500" fontSize="sm">
           Ver los {comments.pageInfo.total} comentarios
@@ -38,6 +39,6 @@ export function CommentList({post}) {
           <Comment comment={comment} key={comment.id} />
         ))
         .reverse()}
-    </div>
+    </Box>
   )
 }
