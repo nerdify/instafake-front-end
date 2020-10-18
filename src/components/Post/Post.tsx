@@ -30,7 +30,6 @@ export function Post(props: PostProps) {
         ...CommentTextArea_post
         ...Header_post
 
-        description
         id
         rootComment {
           ...Comment_comment
