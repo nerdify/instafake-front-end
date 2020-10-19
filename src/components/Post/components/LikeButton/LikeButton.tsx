@@ -94,7 +94,7 @@ export function LikeButton({size, subject: _subject}: LikeButtonProps) {
               ...(subject.__typename === `Post` && {
                 likes: {
                   pageInfo: {
-                    total: subject.likes.pageInfo.total + 1,
+                    total: subject.likes.pageInfo.total - 1,
                   },
                 },
               }),
