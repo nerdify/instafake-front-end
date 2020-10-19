@@ -6,6 +6,9 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Post_post = {
     readonly id: string;
+    readonly rootComment: {
+        readonly " $fragmentRefs": FragmentRefs<"Comment_comment">;
+    } | null;
     readonly comments: {
         readonly pageInfo: {
             readonly total: number | null;
@@ -71,6 +74,22 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "id",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Comment",
+      "kind": "LinkedField",
+      "name": "rootComment",
+      "plural": false,
+      "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "Comment_comment"
+        }
+      ],
       "storageKey": null
     },
     {

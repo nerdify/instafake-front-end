@@ -90,6 +90,10 @@ fragment Post_post_4i7Unr on Post {
   ...CommentTextArea_post
   ...Header_post
   id
+  rootComment {
+    ...Comment_comment
+    id
+  }
   comments(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {
     pageInfo {
       total
@@ -162,36 +166,32 @@ v4 = {
   ],
   "storageKey": null
 },
-v5 = [
-  (v2/*: any*/),
-  {
-    "kind": "Literal",
-    "name": "orderBy",
-    "value": {
-      "column": "CREATED_AT",
-      "order": "DESC"
-    }
-  }
-],
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "total",
+  "name": "text",
   "storageKey": null
 },
-v7 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v8 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "viewerHasLiked",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "total",
   "storageKey": null
 },
 v9 = {
@@ -216,13 +216,32 @@ v9 = {
       "name": "pageInfo",
       "plural": false,
       "selections": [
-        (v6/*: any*/)
+        (v8/*: any*/)
       ],
       "storageKey": null
     }
   ],
   "storageKey": "likes(first:1)"
-};
+},
+v10 = {
+  "kind": "InlineFragment",
+  "selections": [
+    (v9/*: any*/)
+  ],
+  "type": "Post",
+  "abstractKey": null
+},
+v11 = [
+  (v2/*: any*/),
+  {
+    "kind": "Literal",
+    "name": "orderBy",
+    "value": {
+      "column": "CREATED_AT",
+      "order": "DESC"
+    }
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -291,7 +310,7 @@ return {
                 "name": "pageInfo",
                 "plural": false,
                 "selections": [
-                  (v6/*: any*/),
+                  (v8/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -325,28 +344,15 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "text",
-                        "storageKey": null
-                      },
+                      (v5/*: any*/),
                       (v4/*: any*/),
                       (v3/*: any*/),
-                      (v7/*: any*/),
+                      (v6/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v8/*: any*/),
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              (v9/*: any*/)
-                            ],
-                            "type": "Post",
-                            "abstractKey": null
-                          }
+                          (v7/*: any*/),
+                          (v10/*: any*/)
                         ],
                         "type": "Likeable",
                         "abstractKey": "__isLikeable"
@@ -369,7 +375,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v11/*: any*/),
             "filters": [],
             "handle": "connection",
             "key": "Post_comments",
@@ -398,8 +404,8 @@ return {
           {
             "kind": "InlineFragment",
             "selections": [
-              (v7/*: any*/),
-              (v8/*: any*/)
+              (v6/*: any*/),
+              (v7/*: any*/)
             ],
             "type": "Likeable",
             "abstractKey": "__isLikeable"
