@@ -11,6 +11,7 @@ import {
 
 import {BookmarkButton_post$key} from './__generated__/BookmarkButton_post.graphql'
 import {BookmarkButtonCreateBookmarkMutation} from './__generated__/BookmarkButtonCreateBookmarkMutation.graphql'
+import {BookmarkButtonRemoveBookmarkMutation} from './__generated__/BookmarkButtonRemoveBookmarkMutation.graphql'
 
 // eslint-disable-next-line quotes
 interface BookmarkButtonProps extends Pick<FontAwesomeIconProps, 'size'> {

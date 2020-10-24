@@ -79,8 +79,18 @@ export type AddLikeInput = {
 };
 
 
+export type RemoveLikeInput = {
+  subjectId: Scalars['ID'];
+};
+
+
 export type CreateBookmarkInput = {
   /** The post id for save has a bookmark. */
+  postId: Scalars['ID'];
+};
+
+
+export type RemoveBookmarkInput = {
   postId: Scalars['ID'];
 };
 
