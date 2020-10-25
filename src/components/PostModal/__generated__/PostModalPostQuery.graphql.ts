@@ -89,7 +89,6 @@ fragment Post_post_4i7Unr on Post {
   ...Actions_post
   ...CommentTextArea_post
   ...Header_post
-  description
   id
   rootComment {
     ...Comment_comment
@@ -298,13 +297,6 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "description",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "Comment",
             "kind": "LinkedField",
             "name": "rootComment",
@@ -448,12 +440,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2710f2e615ddcf91dd045d9dfd75f117",
+    "cacheID": "34c81b1b41963fe00da8c5195c8b863f",
     "id": null,
     "metadata": {},
     "name": "PostModalPostQuery",
     "operationKind": "query",
-    "text": "query PostModalPostQuery(\n  $id: ID!\n) {\n  post(id: $id) {\n    ...Post_post_4i7Unr\n    id\n  }\n}\n\nfragment Actions_post on Post {\n  ...BookmarkButton_post\n  ...LikeButton_subject\n}\n\nfragment BookmarkButton_post on Post {\n  id\n  viewerHasBookmarked\n}\n\nfragment CommentList_comments on Comment {\n  ...Comment_comment\n  id\n}\n\nfragment CommentTextArea_post on Post {\n  id\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment Header_post on Post {\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post_4i7Unr on Post {\n  ...Actions_post\n  ...CommentTextArea_post\n  ...Header_post\n  description\n  id\n  rootComment {\n    ...Comment_comment\n    id\n  }\n  comments(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...CommentList_comments\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  images {\n    ...Gallery_images\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n}\n"
+    "text": "query PostModalPostQuery(\n  $id: ID!\n) {\n  post(id: $id) {\n    ...Post_post_4i7Unr\n    id\n  }\n}\n\nfragment Actions_post on Post {\n  ...BookmarkButton_post\n  ...LikeButton_subject\n}\n\nfragment BookmarkButton_post on Post {\n  id\n  viewerHasBookmarked\n}\n\nfragment CommentList_comments on Comment {\n  ...Comment_comment\n  id\n}\n\nfragment CommentTextArea_post on Post {\n  id\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment Header_post on Post {\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post_4i7Unr on Post {\n  ...Actions_post\n  ...CommentTextArea_post\n  ...Header_post\n  id\n  rootComment {\n    ...Comment_comment\n    id\n  }\n  comments(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...CommentList_comments\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  images {\n    ...Gallery_images\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n}\n"
   }
 };
 })();

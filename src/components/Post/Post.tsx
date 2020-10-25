@@ -1,7 +1,7 @@
-/* eslint relay/must-colocate-fragment-spreads: off */
+/* eslint relay/must-colocate-fragment-spreads:0 */
 import React, {useState} from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
-import {Box, Flex, Stack, Text} from '@chakra-ui/core'
+import {Box, Text} from '@chakra-ui/core'
 
 import {Post_post$key} from './__generated__/Post_post.graphql'
 
@@ -28,8 +28,6 @@ export function Post(props: PostProps) {
         ...Actions_post
         ...CommentTextArea_post
         ...Header_post
-
-        description
         id
         rootComment {
           ...Comment_comment
