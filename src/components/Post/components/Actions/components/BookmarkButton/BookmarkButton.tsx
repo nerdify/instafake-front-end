@@ -11,6 +11,7 @@ import {
 
 import {BookmarkButton_post$key} from './__generated__/BookmarkButton_post.graphql'
 import {BookmarkButtonCreateBookmarkMutation} from './__generated__/BookmarkButtonCreateBookmarkMutation.graphql'
+import {BookmarkButtonRemoveBookmarkMutation} from './__generated__/BookmarkButtonRemoveBookmarkMutation.graphql'
 
 // eslint-disable-next-line quotes
 interface BookmarkButtonProps extends Pick<FontAwesomeIconProps, 'size'> {
@@ -27,7 +28,8 @@ export function BookmarkButton({size, post: _post}: BookmarkButtonProps) {
     `,
     _post
   )
-  const [addLikeCommit] = useMutation<
+
+  const [addBookMarkedCommit] = useMutation<
     BookmarkButtonCreateBookmarkMutation
   >(graphql`
     mutation BookmarkButtonCreateBookmarkMutation(
@@ -42,8 +44,23 @@ export function BookmarkButton({size, post: _post}: BookmarkButtonProps) {
     }
   `)
 
-  function handleClick() {
-    addLikeCommit({
+  const [removeBookMarkedCommit] = useMutation<
+    BookmarkButtonRemoveBookmarkMutation
+  >(graphql`
+    mutation BookmarkButtonRemoveBookmarkMutation(
+      $input: RemoveBookmarkInput!
+    ) {
+      removeBookmark(input: $input) {
+        post {
+          id
+          viewerHasBookmarked
+        }
+      }
+    }
+  `)
+
+  function addBookMark() {
+    addBookMarkedCommit({
       optimisticResponse: {
         createBookmark: {
           post: {
@@ -58,6 +75,32 @@ export function BookmarkButton({size, post: _post}: BookmarkButtonProps) {
         },
       },
     })
+  }
+
+  function removeBookMark() {
+    removeBookMarkedCommit({
+      optimisticResponse: {
+        removeBookmark: {
+          post: {
+            id: post.id,
+            viewerHasBookmarked: false,
+          },
+        },
+      },
+      variables: {
+        input: {
+          postId: post.id,
+        },
+      },
+    })
+  }
+
+  function handleClick() {
+    if (post.viewerHasBookmarked) {
+      removeBookMark()
+    } else {
+      addBookMark()
+    }
   }
 
   return (

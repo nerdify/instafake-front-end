@@ -272,6 +272,7 @@ type Mutation {
   addLike(input: AddLikeInput!): AddLikePayload
   removeLike(input: RemoveLikeInput!): RemoveLikePayload
   createBookmark(input: CreateBookmarkInput!): CreateBookmarkPayload
+  removeBookmark(input: RemoveBookmarkInput!): RemoveBookmarkPayload
   createPost(input: CreatePostInput!): CreatePostPayload
 }
 
@@ -309,6 +310,14 @@ input CreateBookmarkInput {
 }
 
 type CreateBookmarkPayload {
+  post: Post
+}
+
+input RemoveBookmarkInput {
+  postId: ID!
+}
+
+type RemoveBookmarkPayload {
   post: Post
 }
 
