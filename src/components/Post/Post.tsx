@@ -1,4 +1,4 @@
-/* eslint relay/must-colocate-fragment-spreads: off */
+/* eslint relay/must-colocate-fragment-spreads:0 */
 import React, {useState} from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
 import {Box, Text} from '@chakra-ui/core'
@@ -7,6 +7,7 @@ import {Post_post$key} from './__generated__/Post_post.graphql'
 
 import {
   Actions,
+  Comment,
   CommentList,
   CommentTextArea,
   Gallery,
@@ -27,9 +28,10 @@ export function Post(props: PostProps) {
         ...Actions_post
         ...CommentTextArea_post
         ...Header_post
-
-        description
         id
+        rootComment {
+          ...Comment_comment
+        }
         comments(first: $first, orderBy: {column: CREATED_AT, order: DESC})
           @connection(filters: [], key: "Post_comments") {
           pageInfo {
@@ -78,6 +80,8 @@ export function Post(props: PostProps) {
             {post.likes.pageInfo.total} me gusta
           </Text>
         )}
+
+        {post.rootComment && <Comment comment={post.rootComment} />}
 
         <CommentList comments={post.comments.edges.map((edge) => edge.node)} />
 

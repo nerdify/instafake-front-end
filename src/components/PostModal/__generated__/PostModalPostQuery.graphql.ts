@@ -89,8 +89,11 @@ fragment Post_post_4i7Unr on Post {
   ...Actions_post
   ...CommentTextArea_post
   ...Header_post
-  description
   id
+  rootComment {
+    ...Comment_comment
+    id
+  }
   comments(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {
     pageInfo {
       total
@@ -163,36 +166,32 @@ v4 = {
   ],
   "storageKey": null
 },
-v5 = [
-  (v2/*: any*/),
-  {
-    "kind": "Literal",
-    "name": "orderBy",
-    "value": {
-      "column": "CREATED_AT",
-      "order": "DESC"
-    }
-  }
-],
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "total",
+  "name": "text",
   "storageKey": null
 },
-v7 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v8 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "viewerHasLiked",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "total",
   "storageKey": null
 },
 v9 = {
@@ -217,13 +216,32 @@ v9 = {
       "name": "pageInfo",
       "plural": false,
       "selections": [
-        (v6/*: any*/)
+        (v8/*: any*/)
       ],
       "storageKey": null
     }
   ],
   "storageKey": "likes(first:1)"
-};
+},
+v10 = {
+  "kind": "InlineFragment",
+  "selections": [
+    (v9/*: any*/)
+  ],
+  "type": "Post",
+  "abstractKey": null
+},
+v11 = [
+  (v2/*: any*/),
+  {
+    "kind": "Literal",
+    "name": "orderBy",
+    "value": {
+      "column": "CREATED_AT",
+      "order": "DESC"
+    }
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -279,13 +297,30 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "description",
+            "concreteType": "Comment",
+            "kind": "LinkedField",
+            "name": "rootComment",
+            "plural": false,
+            "selections": [
+              (v5/*: any*/),
+              (v4/*: any*/),
+              (v3/*: any*/),
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v6/*: any*/),
+                  (v7/*: any*/),
+                  (v10/*: any*/)
+                ],
+                "type": "Likeable",
+                "abstractKey": "__isLikeable"
+              }
+            ],
             "storageKey": null
           },
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v11/*: any*/),
             "concreteType": "CommentConnection",
             "kind": "LinkedField",
             "name": "comments",
@@ -299,7 +334,7 @@ return {
                 "name": "pageInfo",
                 "plural": false,
                 "selections": [
-                  (v6/*: any*/),
+                  (v8/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -333,28 +368,15 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "text",
-                        "storageKey": null
-                      },
+                      (v5/*: any*/),
                       (v4/*: any*/),
                       (v3/*: any*/),
-                      (v7/*: any*/),
+                      (v6/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v8/*: any*/),
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              (v9/*: any*/)
-                            ],
-                            "type": "Post",
-                            "abstractKey": null
-                          }
+                          (v7/*: any*/),
+                          (v10/*: any*/)
                         ],
                         "type": "Likeable",
                         "abstractKey": "__isLikeable"
@@ -377,7 +399,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v11/*: any*/),
             "filters": [],
             "handle": "connection",
             "key": "Post_comments",
@@ -406,8 +428,8 @@ return {
           {
             "kind": "InlineFragment",
             "selections": [
-              (v7/*: any*/),
-              (v8/*: any*/)
+              (v6/*: any*/),
+              (v7/*: any*/)
             ],
             "type": "Likeable",
             "abstractKey": "__isLikeable"
@@ -418,12 +440,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8322ed4a9bb09d37d18dfae56a5ae59f",
+    "cacheID": "34c81b1b41963fe00da8c5195c8b863f",
     "id": null,
     "metadata": {},
     "name": "PostModalPostQuery",
     "operationKind": "query",
-    "text": "query PostModalPostQuery(\n  $id: ID!\n) {\n  post(id: $id) {\n    ...Post_post_4i7Unr\n    id\n  }\n}\n\nfragment Actions_post on Post {\n  ...BookmarkButton_post\n  ...LikeButton_subject\n}\n\nfragment BookmarkButton_post on Post {\n  id\n  viewerHasBookmarked\n}\n\nfragment CommentList_comments on Comment {\n  ...Comment_comment\n  id\n}\n\nfragment CommentTextArea_post on Post {\n  id\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment Header_post on Post {\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post_4i7Unr on Post {\n  ...Actions_post\n  ...CommentTextArea_post\n  ...Header_post\n  description\n  id\n  comments(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...CommentList_comments\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  images {\n    ...Gallery_images\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n}\n"
+    "text": "query PostModalPostQuery(\n  $id: ID!\n) {\n  post(id: $id) {\n    ...Post_post_4i7Unr\n    id\n  }\n}\n\nfragment Actions_post on Post {\n  ...BookmarkButton_post\n  ...LikeButton_subject\n}\n\nfragment BookmarkButton_post on Post {\n  id\n  viewerHasBookmarked\n}\n\nfragment CommentList_comments on Comment {\n  ...Comment_comment\n  id\n}\n\nfragment CommentTextArea_post on Post {\n  id\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment Header_post on Post {\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post_4i7Unr on Post {\n  ...Actions_post\n  ...CommentTextArea_post\n  ...Header_post\n  id\n  rootComment {\n    ...Comment_comment\n    id\n  }\n  comments(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...CommentList_comments\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n  images {\n    ...Gallery_images\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n}\n"
   }
 };
 })();
