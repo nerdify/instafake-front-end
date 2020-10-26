@@ -9,15 +9,12 @@ export type PostPostQueryVariables = {
 };
 export type PostPostQueryResponse = {
     readonly post: {
-        readonly description: string | null;
         readonly id: string;
         readonly comments: {
-            readonly pageInfo: {
-                readonly total: number | null;
-            };
             readonly edges: ReadonlyArray<{
                 readonly node: {
-                    readonly " $fragmentRefs": FragmentRefs<"CommentList_comments">;
+                    readonly id: string;
+                    readonly " $fragmentRefs": FragmentRefs<"PostComment_comment">;
                 } | null;
             } | null> | null;
         } | null;
@@ -29,9 +26,11 @@ export type PostPostQueryResponse = {
                 readonly total: number | null;
             };
         } | null;
-        readonly user: {
-            readonly username: string;
-        };
+        readonly rootComment: {
+            readonly id: string;
+            readonly " $fragmentRefs": FragmentRefs<"PostComment_comment">;
+        } | null;
+        readonly " $fragmentRefs": FragmentRefs<"Header_post">;
     } | null;
 };
 export type PostPostQuery = {
@@ -46,21 +45,20 @@ query PostPostQuery(
   $id: ID!
 ) {
   post(id: $id) {
-    description
     id
-    comments(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {
-      pageInfo {
-        total
-        endCursor
-        hasNextPage
-      }
+    ...Header_post
+    comments(first: 12, orderBy: {column: CREATED_AT, order: DESC}) {
       edges {
         node {
-          ...CommentList_comments
+          ...PostComment_comment
           id
           __typename
         }
         cursor
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
       }
     }
     images {
@@ -71,29 +69,22 @@ query PostPostQuery(
         total
       }
     }
-    user {
-      username
+    rootComment {
       id
+      ...PostComment_comment
     }
-  }
-}
-
-fragment CommentList_comments on Comment {
-  ...Comment_comment
-  id
-}
-
-fragment Comment_comment on Comment {
-  ...LikeButton_subject
-  text
-  user {
-    username
-    id
   }
 }
 
 fragment Gallery_images on Image {
   url
+}
+
+fragment Header_post on Post {
+  user {
+    username
+    id
+  }
 }
 
 fragment LikeButton_subject on Likeable {
@@ -110,6 +101,15 @@ fragment LikeButton_subject on Likeable {
         total
       }
     }
+  }
+}
+
+fragment PostComment_comment on Comment {
+  ...LikeButton_subject
+  text
+  user {
+    username
+    id
   }
 }
 */
@@ -133,24 +133,29 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "description",
+  "name": "id",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "__typename",
   "storageKey": null
 },
 v4 = {
+  "args": null,
+  "kind": "FragmentSpread",
+  "name": "PostComment_comment"
+},
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "total",
+  "name": "cursor",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "concreteType": "PageInfo",
@@ -158,7 +163,6 @@ v5 = {
   "name": "pageInfo",
   "plural": false,
   "selections": [
-    (v4/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -176,21 +180,7 @@ v5 = {
   ],
   "storageKey": null
 },
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-},
 v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "cursor",
-  "storageKey": null
-},
-v8 = {
   "alias": null,
   "args": [
     {
@@ -212,25 +202,43 @@ v8 = {
       "name": "pageInfo",
       "plural": false,
       "selections": [
-        (v4/*: any*/)
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "total",
+          "storageKey": null
+        }
       ],
       "storageKey": null
     }
   ],
   "storageKey": "likes(first:1)"
 },
-v9 = {
+v8 = {
   "alias": null,
   "args": null,
-  "kind": "ScalarField",
-  "name": "username",
+  "concreteType": "User",
+  "kind": "LinkedField",
+  "name": "user",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "username",
+      "storageKey": null
+    },
+    (v2/*: any*/)
+  ],
   "storageKey": null
 },
-v10 = [
+v9 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 10
+    "value": 12
   },
   {
     "kind": "Literal",
@@ -241,18 +249,27 @@ v10 = [
     }
   }
 ],
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "text",
+  "storageKey": null
+},
 v11 = {
   "alias": null,
   "args": null,
-  "concreteType": "User",
-  "kind": "LinkedField",
-  "name": "user",
-  "plural": false,
-  "selections": [
-    (v9/*: any*/),
-    (v3/*: any*/)
-  ],
+  "kind": "ScalarField",
+  "name": "viewerHasLiked",
   "storageKey": null
+},
+v12 = {
+  "kind": "InlineFragment",
+  "selections": [
+    (v7/*: any*/)
+  ],
+  "type": "Post",
+  "abstractKey": null
 };
 return {
   "fragment": {
@@ -270,7 +287,6 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v3/*: any*/),
           {
             "alias": "comments",
             "args": null,
@@ -279,7 +295,6 @@ return {
             "name": "__Post_comments_connection",
             "plural": false,
             "selections": [
-              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -296,19 +311,17 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v6/*: any*/),
-                      {
-                        "args": null,
-                        "kind": "FragmentSpread",
-                        "name": "CommentList_comments"
-                      }
+                      (v2/*: any*/),
+                      (v3/*: any*/),
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v7/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
-              }
+              },
+              (v6/*: any*/)
             ],
             "storageKey": null
           },
@@ -328,18 +341,24 @@ return {
             ],
             "storageKey": null
           },
-          (v8/*: any*/),
+          (v7/*: any*/),
           {
             "alias": null,
             "args": null,
-            "concreteType": "User",
+            "concreteType": "Comment",
             "kind": "LinkedField",
-            "name": "user",
+            "name": "rootComment",
             "plural": false,
             "selections": [
-              (v9/*: any*/)
+              (v2/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
+          },
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "Header_post"
           }
         ],
         "storageKey": null
@@ -363,16 +382,15 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v3/*: any*/),
+          (v8/*: any*/),
           {
             "alias": null,
-            "args": (v10/*: any*/),
+            "args": (v9/*: any*/),
             "concreteType": "CommentConnection",
             "kind": "LinkedField",
             "name": "comments",
             "plural": false,
             "selections": [
-              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -389,34 +407,15 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "text",
-                        "storageKey": null
-                      },
-                      (v11/*: any*/),
+                      (v10/*: any*/),
+                      (v8/*: any*/),
+                      (v2/*: any*/),
                       (v3/*: any*/),
-                      (v6/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "viewerHasLiked",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              (v8/*: any*/)
-                            ],
-                            "type": "Post",
-                            "abstractKey": null
-                          }
+                          (v11/*: any*/),
+                          (v12/*: any*/)
                         ],
                         "type": "Likeable",
                         "abstractKey": "__isLikeable"
@@ -424,16 +423,17 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v7/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
-              }
+              },
+              (v6/*: any*/)
             ],
-            "storageKey": "comments(first:10,orderBy:{\"column\":\"CREATED_AT\",\"order\":\"DESC\"})"
+            "storageKey": "comments(first:12,orderBy:{\"column\":\"CREATED_AT\",\"order\":\"DESC\"})"
           },
           {
             "alias": null,
-            "args": (v10/*: any*/),
+            "args": (v9/*: any*/),
             "filters": [],
             "handle": "connection",
             "key": "Post_comments",
@@ -458,15 +458,38 @@ return {
             ],
             "storageKey": null
           },
-          (v8/*: any*/),
-          (v11/*: any*/)
+          (v7/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Comment",
+            "kind": "LinkedField",
+            "name": "rootComment",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              (v10/*: any*/),
+              (v8/*: any*/),
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v3/*: any*/),
+                  (v11/*: any*/),
+                  (v12/*: any*/)
+                ],
+                "type": "Likeable",
+                "abstractKey": "__isLikeable"
+              }
+            ],
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "e401358a89b0c4dc1e3cc4661488a825",
+    "cacheID": "2280fd1135b621d917b5091c9942affa",
     "id": null,
     "metadata": {
       "connection": [
@@ -483,9 +506,9 @@ return {
     },
     "name": "PostPostQuery",
     "operationKind": "query",
-    "text": "query PostPostQuery(\n  $id: ID!\n) {\n  post(id: $id) {\n    description\n    id\n    comments(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {\n      pageInfo {\n        total\n        endCursor\n        hasNextPage\n      }\n      edges {\n        node {\n          ...CommentList_comments\n          id\n          __typename\n        }\n        cursor\n      }\n    }\n    images {\n      ...Gallery_images\n    }\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n    user {\n      username\n      id\n    }\n  }\n}\n\nfragment CommentList_comments on Comment {\n  ...Comment_comment\n  id\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n"
+    "text": "query PostPostQuery(\n  $id: ID!\n) {\n  post(id: $id) {\n    id\n    ...Header_post\n    comments(first: 12, orderBy: {column: CREATED_AT, order: DESC}) {\n      edges {\n        node {\n          ...PostComment_comment\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    images {\n      ...Gallery_images\n    }\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n    rootComment {\n      id\n      ...PostComment_comment\n    }\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment Header_post on Post {\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment PostComment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'e1bbcdb078b47f342d0b096d9e4379a4';
+(node as any).hash = '9b9db66ca237b11951628d2a53a292df';
 export default node;
