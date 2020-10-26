@@ -270,7 +270,9 @@ enum PostsOrderColumn {
 type Mutation {
   createComment(input: CreateCommentInput!): CreateCommentPayload
   addLike(input: AddLikeInput!): AddLikePayload
+  removeLike(input: RemoveLikeInput!): RemoveLikePayload
   createBookmark(input: CreateBookmarkInput!): CreateBookmarkPayload
+  removeBookmark(input: RemoveBookmarkInput!): RemoveBookmarkPayload
   createPost(input: CreatePostInput!): CreatePostPayload
 }
 
@@ -294,12 +296,28 @@ type AddLikePayload {
   subject: Likeable!
 }
 
+input RemoveLikeInput {
+  subjectId: ID!
+}
+
+type RemoveLikePayload {
+  subject: Likeable!
+}
+
 input CreateBookmarkInput {
   """The post id for save has a bookmark."""
   postId: ID!
 }
 
 type CreateBookmarkPayload {
+  post: Post
+}
+
+input RemoveBookmarkInput {
+  postId: ID!
+}
+
+type RemoveBookmarkPayload {
   post: Post
 }
 

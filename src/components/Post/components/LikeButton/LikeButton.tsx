@@ -60,30 +60,78 @@ export function LikeButton({size, subject: _subject}: LikeButtonProps) {
     }
   `)
 
+  const [removeLikeCommit] = useMutation(graphql`
+    mutation LikeButtonRemoveLikeMutation($input: RemoveLikeInput!) {
+      removeLike(input: $input) {
+        subject {
+          __typename
+          viewerHasLiked
+          ... on Comment {
+            id
+          }
+          ... on Post {
+            id
+            likes(first: 1) {
+              pageInfo {
+                total
+              }
+            }
+          }
+        }
+      }
+    }
+  `)
+
   function handleClick() {
-    addLikeCommit({
-      optimisticResponse: {
-        addLike: {
-          subject: {
-            __typename: subject.__typename,
-            id: subject.id,
-            viewerHasLiked: true,
-            ...(subject.__typename === `Post` && {
-              likes: {
-                pageInfo: {
-                  total: subject.likes.pageInfo.total + 1,
+    if (subject.viewerHasLiked) {
+      removeLikeCommit({
+        optimisticResponse: {
+          removeLike: {
+            subject: {
+              __typename: subject.__typename,
+              id: subject.id,
+              viewerHasLiked: true,
+              ...(subject.__typename === `Post` && {
+                likes: {
+                  pageInfo: {
+                    total: subject.likes.pageInfo.total - 1,
+                  },
                 },
-              },
-            }),
+              }),
+            },
           },
         },
-      },
-      variables: {
-        input: {
-          subjectId: subject.id,
+        variables: {
+          input: {
+            subjectId: subject.id,
+          },
         },
-      },
-    })
+      })
+    } else {
+      addLikeCommit({
+        optimisticResponse: {
+          addLike: {
+            subject: {
+              __typename: subject.__typename,
+              id: subject.id,
+              viewerHasLiked: true,
+              ...(subject.__typename === `Post` && {
+                likes: {
+                  pageInfo: {
+                    total: subject.likes.pageInfo.total + 1,
+                  },
+                },
+              }),
+            },
+          },
+        },
+        variables: {
+          input: {
+            subjectId: subject.id,
+          },
+        },
+      })
+    }
   }
 
   return (
