@@ -90,6 +90,11 @@ export type CreateBookmarkInput = {
 };
 
 
+export type RemoveBookmarkInput = {
+  postId: Scalars['ID'];
+};
+
+
 export type CreatePostInput = {
   /** All photos for create a new post. */
   photos: Array<Scalars['Upload']>;
