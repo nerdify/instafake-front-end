@@ -202,6 +202,7 @@ type CommentEdge {
 }
 
 type Comment implements Likeable & Node {
+  createdAt: DateTime!
   id: ID!
 
   """A list of likes associated with the comment."""
@@ -227,6 +228,11 @@ type Comment implements Likeable & Node {
   """
   viewerHasLiked: Boolean!
 }
+
+"""
+An ISO-8601 encoded UTC date time string. Example value: `2019-07-03T20:47:55Z`.
+"""
+scalar DateTime
 
 """A paginated list of Like edges."""
 type LikeConnection {
@@ -362,11 +368,6 @@ interface Updatable {
   """Check if the current viewer can update this object."""
   viewerCanUpdate: Boolean!
 }
-
-"""
-An ISO-8601 encoded UTC date time string. Example value: `2019-07-03T20:47:55Z`.
-"""
-scalar DateTime
 
 """A [RFC 5321](https://tools.ietf.org/html/rfc5321) compliant email."""
 scalar Email

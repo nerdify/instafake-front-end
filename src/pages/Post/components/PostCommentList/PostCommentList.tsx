@@ -5,7 +5,7 @@ import {PostComment as Comment} from '../PostComment'
 
 export function PostCommentList({comments}) {
   return (
-    <Box>
+    <Box p={4}>
       {comments.map((comment) => (
         <Comment comment={comment} key={comment.id} />
       ))}
