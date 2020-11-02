@@ -12,9 +12,11 @@ export function Header() {
     <Box bg="white" borderBottom="1px solid" borderBottomColor="gray.200">
       <Container h={12} maxW="lg">
         <Flex align="center" h="full" justify="space-between">
-          <Heading as="h1" fontWeight="normal">
-            Instafake
-          </Heading>
+          <Link to="/">
+            <Heading as="h1" fontWeight="normal">
+              Instafake
+            </Heading>
+          </Link>
           <Stack isInline spacing={4}>
             <Link to="create/post">
               <FontAwesomeIcon icon={fasPlus} size="lg" />
