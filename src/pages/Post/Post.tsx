@@ -53,8 +53,6 @@ export function Post() {
 
   comments.unshift(post.rootComment)
 
-  console.log(comments)
-
   return (
     <Flex
       bg="white"
