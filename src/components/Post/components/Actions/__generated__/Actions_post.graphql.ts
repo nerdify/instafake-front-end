@@ -5,6 +5,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Actions_post = {
+    readonly id: string;
     readonly " $fragmentRefs": FragmentRefs<"BookmarkButton_post" | "LikeButton_subject">;
     readonly " $refType": "Actions_post";
 };
@@ -23,6 +24,13 @@ const node: ReaderFragment = {
   "name": "Actions_post",
   "selections": [
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "BookmarkButton_post"
@@ -36,5 +44,5 @@ const node: ReaderFragment = {
   "type": "Post",
   "abstractKey": null
 };
-(node as any).hash = '804368a3bbd82a833e76883d7b2f8c39';
+(node as any).hash = 'da17d700d8f259e0da9967c5b2269a25';
 export default node;

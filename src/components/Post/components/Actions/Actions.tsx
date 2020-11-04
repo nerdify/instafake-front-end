@@ -1,5 +1,6 @@
 /* eslint relay/must-colocate-fragment-spreads:0 */
 import React from 'react'
+import {Link} from 'react-router-dom'
 import {graphql, useFragment} from 'react-relay/hooks'
 import {Flex, Stack} from '@chakra-ui/core'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -20,6 +21,8 @@ export function Actions({post: _post}: ActionsProps) {
       fragment Actions_post on Post {
         ...BookmarkButton_post
         ...LikeButton_subject
+
+        id
       }
     `,
     _post
@@ -28,7 +31,9 @@ export function Actions({post: _post}: ActionsProps) {
     <Flex align="center" justify="space-between">
       <Stack isInline align="center" spacing={4}>
         <LikeButton subject={post} size="lg" />
-        <FontAwesomeIcon icon={faComment} size="lg" />
+        <Link to={`posts/${post.id}`}>
+          <FontAwesomeIcon icon={faComment} size="lg" />
+        </Link>
         <FontAwesomeIcon icon={faPaperPlane} size="lg" />
       </Stack>
       <Flex>
