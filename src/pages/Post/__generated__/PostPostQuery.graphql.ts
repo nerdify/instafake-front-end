@@ -108,6 +108,11 @@ fragment PostComment_comment on Comment {
   ...LikeButton_subject
   createdAt
   text
+  likes(first: 1) {
+    pageInfo {
+      total
+    }
+  }
   user {
     username
     id
@@ -270,14 +275,6 @@ v12 = {
   "kind": "ScalarField",
   "name": "viewerHasLiked",
   "storageKey": null
-},
-v13 = {
-  "kind": "InlineFragment",
-  "selections": [
-    (v7/*: any*/)
-  ],
-  "type": "Post",
-  "abstractKey": null
 };
 return {
   "fragment": {
@@ -417,14 +414,14 @@ return {
                     "selections": [
                       (v10/*: any*/),
                       (v11/*: any*/),
+                      (v7/*: any*/),
                       (v8/*: any*/),
                       (v2/*: any*/),
                       (v3/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
-                          (v12/*: any*/),
-                          (v13/*: any*/)
+                          (v12/*: any*/)
                         ],
                         "type": "Likeable",
                         "abstractKey": "__isLikeable"
@@ -479,13 +476,13 @@ return {
               (v2/*: any*/),
               (v10/*: any*/),
               (v11/*: any*/),
+              (v7/*: any*/),
               (v8/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
                   (v3/*: any*/),
-                  (v12/*: any*/),
-                  (v13/*: any*/)
+                  (v12/*: any*/)
                 ],
                 "type": "Likeable",
                 "abstractKey": "__isLikeable"
@@ -499,7 +496,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2523a1ebd43849d4ad3a933915637cdf",
+    "cacheID": "edf796b0a0511806771e452969808671",
     "id": null,
     "metadata": {
       "connection": [
@@ -516,7 +513,7 @@ return {
     },
     "name": "PostPostQuery",
     "operationKind": "query",
-    "text": "query PostPostQuery(\n  $id: ID!\n) {\n  post(id: $id) {\n    id\n    ...Header_post\n    comments(first: 12, orderBy: {column: CREATED_AT, order: DESC}) {\n      edges {\n        node {\n          ...PostComment_comment\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    images {\n      ...Gallery_images\n    }\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n    rootComment {\n      id\n      ...PostComment_comment\n    }\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment Header_post on Post {\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment PostComment_comment on Comment {\n  ...LikeButton_subject\n  createdAt\n  text\n  user {\n    username\n    id\n  }\n}\n"
+    "text": "query PostPostQuery(\n  $id: ID!\n) {\n  post(id: $id) {\n    id\n    ...Header_post\n    comments(first: 12, orderBy: {column: CREATED_AT, order: DESC}) {\n      edges {\n        node {\n          ...PostComment_comment\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    images {\n      ...Gallery_images\n    }\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n    rootComment {\n      id\n      ...PostComment_comment\n    }\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment Header_post on Post {\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment PostComment_comment on Comment {\n  ...LikeButton_subject\n  createdAt\n  text\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
   }
 };
 })();

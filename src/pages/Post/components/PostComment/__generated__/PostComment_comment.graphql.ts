@@ -7,6 +7,11 @@ import { FragmentRefs } from "relay-runtime";
 export type PostComment_comment = {
     readonly createdAt: string;
     readonly text: string | null;
+    readonly likes: {
+        readonly pageInfo: {
+            readonly total: number | null;
+        };
+    } | null;
     readonly user: {
         readonly username: string;
     };
@@ -43,6 +48,41 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 1
+        }
+      ],
+      "concreteType": "LikeConnection",
+      "kind": "LinkedField",
+      "name": "likes",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "total",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "likes(first:1)"
+    },
+    {
+      "alias": null,
       "args": null,
       "concreteType": "User",
       "kind": "LinkedField",
@@ -68,5 +108,5 @@ const node: ReaderFragment = {
   "type": "Comment",
   "abstractKey": null
 };
-(node as any).hash = '9e819a35aff24293ccc5fecf9638f2c7';
+(node as any).hash = 'e43ec197048f18deeb352b711470e56c';
 export default node;
