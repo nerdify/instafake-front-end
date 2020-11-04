@@ -1,9 +1,15 @@
 import React from 'react'
 import {useParams} from 'react-router-dom'
 import {graphql, useLazyLoadQuery} from 'react-relay/hooks'
-import {Flex} from '@chakra-ui/core'
+import {Box, Flex, Text} from '@chakra-ui/core'
+import {formatDistanceToNow} from 'date-fns'
 
-import {Gallery, Header} from '../../components/Post/components'
+import {
+  Actions,
+  CommentTextArea,
+  Gallery,
+  Header,
+} from '../../components/Post/components'
 
 import {PostCommentList} from './components'
 
@@ -16,7 +22,10 @@ export function Post() {
       query PostPostQuery($id: ID!) {
         post(id: $id) {
           id
+          createdAt
 
+          ...Actions_post
+          ...CommentTextArea_post
           ...Header_post
 
           comments(first: 12, orderBy: {column: CREATED_AT, order: DESC})
@@ -67,6 +76,25 @@ export function Post() {
       <Flex flex={1} direction="column">
         <Header post={post} />
         <PostCommentList comments={comments} />
+        <Box>
+          <Box borderTop="1px solid" borderColor="gray.200" p={4}>
+            <Actions post={post} />
+            {post.likes.pageInfo.total > 0 && (
+              <Text fontSize="sm" fontWeight="semibold" mt={2}>
+                {post.likes.pageInfo.total} Me gusta
+              </Text>
+            )}
+            <Text
+              color="gray.500"
+              fontSize="10px"
+              mt={2}
+              textTransform="uppercase"
+            >
+              {formatDistanceToNow(new Date(post.createdAt))}
+            </Text>
+          </Box>
+          <CommentTextArea post={post} />
+        </Box>
       </Flex>
     </Flex>
   )

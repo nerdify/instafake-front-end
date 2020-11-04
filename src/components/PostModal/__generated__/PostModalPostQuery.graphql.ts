@@ -30,9 +30,9 @@ query PostModalPostQuery(
 }
 
 fragment Actions_post on Post {
-  id
   ...BookmarkButton_post
   ...LikeButton_subject
+  id
 }
 
 fragment BookmarkButton_post on Post {
@@ -441,12 +441,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "56969354e7548c5d6c29c8c0cfc26fc6",
+    "cacheID": "44c47fa21c4c5bf8f21e36c3f7851d28",
     "id": null,
     "metadata": {},
     "name": "PostModalPostQuery",
     "operationKind": "query",
-    "text": "query PostModalPostQuery(\n  $id: ID!\n) {\n  post(id: $id) {\n    ...Post_post_4i7Unr\n    id\n  }\n}\n\nfragment Actions_post on Post {\n  id\n  ...BookmarkButton_post\n  ...LikeButton_subject\n}\n\nfragment BookmarkButton_post on Post {\n  id\n  viewerHasBookmarked\n}\n\nfragment CommentList_post_4i7Unr on Post {\n  id\n  comments(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...Comment_comment\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment CommentTextArea_post on Post {\n  id\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment Header_post on Post {\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post_4i7Unr on Post {\n  ...Actions_post\n  ...CommentList_post_4i7Unr\n  ...CommentTextArea_post\n  ...Header_post\n  id\n  rootComment {\n    ...Comment_comment\n    id\n  }\n  images {\n    ...Gallery_images\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n}\n"
+    "text": "query PostModalPostQuery(\n  $id: ID!\n) {\n  post(id: $id) {\n    ...Post_post_4i7Unr\n    id\n  }\n}\n\nfragment Actions_post on Post {\n  ...BookmarkButton_post\n  ...LikeButton_subject\n  id\n}\n\nfragment BookmarkButton_post on Post {\n  id\n  viewerHasBookmarked\n}\n\nfragment CommentList_post_4i7Unr on Post {\n  id\n  comments(first: 10, orderBy: {column: CREATED_AT, order: DESC}) {\n    pageInfo {\n      total\n      endCursor\n      hasNextPage\n    }\n    edges {\n      node {\n        ...Comment_comment\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment CommentTextArea_post on Post {\n  id\n}\n\nfragment Comment_comment on Comment {\n  ...LikeButton_subject\n  text\n  user {\n    username\n    id\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment Header_post on Post {\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment Post_post_4i7Unr on Post {\n  ...Actions_post\n  ...CommentList_post_4i7Unr\n  ...CommentTextArea_post\n  ...Header_post\n  id\n  rootComment {\n    ...Comment_comment\n    id\n  }\n  images {\n    ...Gallery_images\n  }\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n}\n"
   }
 };
 })();

@@ -10,6 +10,7 @@ export type PostPostQueryVariables = {
 export type PostPostQueryResponse = {
     readonly post: {
         readonly id: string;
+        readonly createdAt: string;
         readonly comments: {
             readonly edges: ReadonlyArray<{
                 readonly node: {
@@ -30,7 +31,7 @@ export type PostPostQueryResponse = {
             readonly id: string;
             readonly " $fragmentRefs": FragmentRefs<"PostComment_comment">;
         } | null;
-        readonly " $fragmentRefs": FragmentRefs<"Header_post">;
+        readonly " $fragmentRefs": FragmentRefs<"Actions_post" | "CommentTextArea_post" | "Header_post">;
     } | null;
 };
 export type PostPostQuery = {
@@ -46,6 +47,9 @@ query PostPostQuery(
 ) {
   post(id: $id) {
     id
+    createdAt
+    ...Actions_post
+    ...CommentTextArea_post
     ...Header_post
     comments(first: 12, orderBy: {column: CREATED_AT, order: DESC}) {
       edges {
@@ -74,6 +78,21 @@ query PostPostQuery(
       ...PostComment_comment
     }
   }
+}
+
+fragment Actions_post on Post {
+  ...BookmarkButton_post
+  ...LikeButton_subject
+  id
+}
+
+fragment BookmarkButton_post on Post {
+  id
+  viewerHasBookmarked
+}
+
+fragment CommentTextArea_post on Post {
+  id
 }
 
 fragment Gallery_images on Image {
@@ -146,22 +165,29 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
+  "name": "createdAt",
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v5 = {
   "args": null,
   "kind": "FragmentSpread",
   "name": "PostComment_comment"
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "concreteType": "PageInfo",
@@ -186,7 +212,7 @@ v6 = {
   ],
   "storageKey": null
 },
-v7 = {
+v8 = {
   "alias": null,
   "args": [
     {
@@ -221,7 +247,7 @@ v7 = {
   ],
   "storageKey": "likes(first:1)"
 },
-v8 = {
+v9 = {
   "alias": null,
   "args": null,
   "concreteType": "User",
@@ -240,7 +266,7 @@ v8 = {
   ],
   "storageKey": null
 },
-v9 = [
+v10 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -255,13 +281,6 @@ v9 = [
     }
   }
 ],
-v10 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "createdAt",
-  "storageKey": null
-},
 v11 = {
   "alias": null,
   "args": null,
@@ -275,6 +294,15 @@ v12 = {
   "kind": "ScalarField",
   "name": "viewerHasLiked",
   "storageKey": null
+},
+v13 = {
+  "kind": "InlineFragment",
+  "selections": [
+    (v4/*: any*/),
+    (v12/*: any*/)
+  ],
+  "type": "Likeable",
+  "abstractKey": "__isLikeable"
 };
 return {
   "fragment": {
@@ -292,6 +320,7 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": "comments",
             "args": null,
@@ -317,16 +346,16 @@ return {
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
-                      (v3/*: any*/),
-                      (v4/*: any*/)
+                      (v4/*: any*/),
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v5/*: any*/)
+                  (v6/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v6/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": null
           },
@@ -346,7 +375,7 @@ return {
             ],
             "storageKey": null
           },
-          (v7/*: any*/),
+          (v8/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -356,9 +385,19 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
+          },
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "Actions_post"
+          },
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "CommentTextArea_post"
           },
           {
             "args": null,
@@ -387,10 +426,18 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v8/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
-            "args": (v9/*: any*/),
+            "args": null,
+            "kind": "ScalarField",
+            "name": "viewerHasBookmarked",
+            "storageKey": null
+          },
+          (v9/*: any*/),
+          {
+            "alias": null,
+            "args": (v10/*: any*/),
             "concreteType": "CommentConnection",
             "kind": "LinkedField",
             "name": "comments",
@@ -412,12 +459,12 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v10/*: any*/),
-                      (v11/*: any*/),
-                      (v7/*: any*/),
-                      (v8/*: any*/),
-                      (v2/*: any*/),
                       (v3/*: any*/),
+                      (v11/*: any*/),
+                      (v8/*: any*/),
+                      (v9/*: any*/),
+                      (v2/*: any*/),
+                      (v4/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
@@ -429,17 +476,17 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v5/*: any*/)
+                  (v6/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v6/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": "comments(first:12,orderBy:{\"column\":\"CREATED_AT\",\"order\":\"DESC\"})"
           },
           {
             "alias": null,
-            "args": (v9/*: any*/),
+            "args": (v10/*: any*/),
             "filters": [],
             "handle": "connection",
             "key": "Post_comments",
@@ -464,7 +511,7 @@ return {
             ],
             "storageKey": null
           },
-          (v7/*: any*/),
+          (v8/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -474,29 +521,22 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v10/*: any*/),
+              (v3/*: any*/),
               (v11/*: any*/),
-              (v7/*: any*/),
               (v8/*: any*/),
-              {
-                "kind": "InlineFragment",
-                "selections": [
-                  (v3/*: any*/),
-                  (v12/*: any*/)
-                ],
-                "type": "Likeable",
-                "abstractKey": "__isLikeable"
-              }
+              (v9/*: any*/),
+              (v13/*: any*/)
             ],
             "storageKey": null
-          }
+          },
+          (v13/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "edf796b0a0511806771e452969808671",
+    "cacheID": "89f1ca543caa43a6087e660585b11596",
     "id": null,
     "metadata": {
       "connection": [
@@ -513,9 +553,9 @@ return {
     },
     "name": "PostPostQuery",
     "operationKind": "query",
-    "text": "query PostPostQuery(\n  $id: ID!\n) {\n  post(id: $id) {\n    id\n    ...Header_post\n    comments(first: 12, orderBy: {column: CREATED_AT, order: DESC}) {\n      edges {\n        node {\n          ...PostComment_comment\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    images {\n      ...Gallery_images\n    }\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n    rootComment {\n      id\n      ...PostComment_comment\n    }\n  }\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment Header_post on Post {\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment PostComment_comment on Comment {\n  ...LikeButton_subject\n  createdAt\n  text\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
+    "text": "query PostPostQuery(\n  $id: ID!\n) {\n  post(id: $id) {\n    id\n    createdAt\n    ...Actions_post\n    ...CommentTextArea_post\n    ...Header_post\n    comments(first: 12, orderBy: {column: CREATED_AT, order: DESC}) {\n      edges {\n        node {\n          ...PostComment_comment\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    images {\n      ...Gallery_images\n    }\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n    rootComment {\n      id\n      ...PostComment_comment\n    }\n  }\n}\n\nfragment Actions_post on Post {\n  ...BookmarkButton_post\n  ...LikeButton_subject\n  id\n}\n\nfragment BookmarkButton_post on Post {\n  id\n  viewerHasBookmarked\n}\n\nfragment CommentTextArea_post on Post {\n  id\n}\n\nfragment Gallery_images on Image {\n  url\n}\n\nfragment Header_post on Post {\n  user {\n    username\n    id\n  }\n}\n\nfragment LikeButton_subject on Likeable {\n  __isLikeable: __typename\n  __typename\n  viewerHasLiked\n  ... on Comment {\n    id\n  }\n  ... on Post {\n    id\n    likes(first: 1) {\n      pageInfo {\n        total\n      }\n    }\n  }\n}\n\nfragment PostComment_comment on Comment {\n  ...LikeButton_subject\n  createdAt\n  text\n  likes(first: 1) {\n    pageInfo {\n      total\n    }\n  }\n  user {\n    username\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '9b9db66ca237b11951628d2a53a292df';
+(node as any).hash = '35320f7990ef149ff61493e3d70ef3ce';
 export default node;

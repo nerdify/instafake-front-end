@@ -37,6 +37,9 @@ type Post implements Likeable & Node {
   description: String
   id: ID!
 
+  """Created at post"""
+  createdAt: DateTime!
+
   """"""
   images: [Image!]!
 
