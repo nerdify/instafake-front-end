@@ -1,7 +1,7 @@
 /* eslint relay/must-colocate-fragment-spreads: off */
 import React, {Suspense} from 'react'
 import {graphql, useLazyLoadQuery} from 'react-relay/hooks'
-import {Modal, ModalBody, ModalContent, ModalOverlay} from '@chakra-ui/core'
+import {Modal, ModalBody, ModalContent, ModalOverlay} from '@chakra-ui/react'
 
 import {PostModalPostQuery} from './__generated__/PostModalPostQuery.graphql'
 

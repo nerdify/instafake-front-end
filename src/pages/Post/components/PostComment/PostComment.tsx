@@ -1,6 +1,6 @@
 import React from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
-import {Avatar, Box, Flex, Heading, Text, Spacer, Stack} from '@chakra-ui/core'
+import {Avatar, Box, Flex, Heading, Text, Spacer, Stack} from '@chakra-ui/react'
 import {formatDistanceToNowStrict} from 'date-fns'
 
 import {LikeButton} from '../../../../components/Post/components/'

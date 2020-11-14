@@ -1,7 +1,7 @@
 import {AnimateSharedLayout, motion} from 'framer-motion'
 import React, {useState} from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
-import {Box, Flex, Spacer, Stack} from '@chakra-ui/core'
+import {Box, Flex, Spacer, Stack} from '@chakra-ui/react'
 import {
   faChevronCircleLeft as fasChevronCircleLeft,
   faChevronCircleRight as fasChevronCircleRight,

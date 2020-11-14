@@ -1,6 +1,6 @@
 import React from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
-import {Box, Text} from '@chakra-ui/core'
+import {Box, Text} from '@chakra-ui/react'
 import {Comment} from '../Comment'
 
 export function CommentList({post}) {

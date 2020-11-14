@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {useMutation} from 'react-relay-mutation'
 import {graphql, useFragment} from 'react-relay/hooks'
 
-import {Flex, Textarea, Button, Center, Spinner} from '@chakra-ui/core'
+import {Flex, Textarea, Button, Center, Spinner} from '@chakra-ui/react'
 import TextareaAutosize from 'react-textarea-autosize'
 
 import {CommentTextAreaCreateCommentMutation} from './__generated__/CommentTextAreaCreateCommentMutation.graphql'

@@ -1,6 +1,6 @@
 import React, {lazy, Suspense} from 'react'
 import {Route, Routes} from 'react-router-dom'
-import {Container} from '@chakra-ui/core'
+import {Container} from '@chakra-ui/react'
 
 const Post = lazy(() => import(`pages/Post`))
 const CreatePost = lazy(() => import(`pages/CreatePost`))

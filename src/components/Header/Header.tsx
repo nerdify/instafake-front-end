@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {Box, Container, Flex, Heading, Stack} from '@chakra-ui/core'
+import {Box, Container, Flex, Heading, Stack} from '@chakra-ui/react'
 import {
   faPlus as fasPlus,
   faHouse as fasHouse,
