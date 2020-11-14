@@ -26,23 +26,14 @@ export function Post(props: PostProps) {
     graphql`
       fragment Post_post on Post @argumentDefinitions(first: {type: "Int!"}) {
         ...Actions_post
+        ...CommentList_post @arguments(first: $first)
         ...CommentTextArea_post
         ...Header_post
         id
         rootComment {
           ...Comment_comment
         }
-        comments(first: $first, orderBy: {column: CREATED_AT, order: DESC})
-          @connection(filters: [], key: "Post_comments") {
-          pageInfo {
-            total
-          }
-          edges {
-            node {
-              ...CommentList_comments
-            }
-          }
-        }
+
         images {
           ...Gallery_images
         }
@@ -83,7 +74,7 @@ export function Post(props: PostProps) {
 
         {post.rootComment && <Comment comment={post.rootComment} />}
 
-        <CommentList comments={post.comments.edges.map((edge) => edge.node)} />
+        <CommentList post={post} />
 
         <Text color="gray.500" fontSize="xs" mt={1} textTransform="uppercase">
           Hace 15 horas
