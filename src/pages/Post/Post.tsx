@@ -1,7 +1,7 @@
 import React from 'react'
 import {useParams} from 'react-router-dom'
 import {graphql, useLazyLoadQuery} from 'react-relay/hooks'
-import {Box, Flex, Text} from '@chakra-ui/core'
+import {Box, Flex, Text} from '@chakra-ui/react'
 import {formatDistanceToNow} from 'date-fns'
 
 import {

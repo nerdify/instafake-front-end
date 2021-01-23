@@ -27,7 +27,9 @@
     "test": "react-app-rewired test"
   },
   "dependencies": {
-    "@chakra-ui/core": "1.0.0-rc.5",
+    "@chakra-ui/react": "1.0.0",
+    "@emotion/react": "11.0.0",
+    "@emotion/styled": "11.0.0",
     "@fortawesome/fontawesome-svg-core": "1.2.32",
     "@fortawesome/pro-light-svg-icons": "5.15.1",
     "@fortawesome/pro-regular-svg-icons": "5.15.1",
@@ -37,7 +39,7 @@
     "dot-prop": "6.0.0",
     "extract-files": "9.0.0",
     "formik": "2.2.0",
-    "framer-motion": "2.8.0",
+    "framer-motion": "2.9.4",
     "history": "5.0.0",
     "lodash.set": "4.3.2",
     "pusher-js": "7.0.0",

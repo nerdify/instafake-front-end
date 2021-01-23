@@ -1,7 +1,7 @@
 /* eslint relay/must-colocate-fragment-spreads:0 */
 import React, {useMemo} from 'react'
 import {graphql, useLazyLoadQuery, useSubscription} from 'react-relay/hooks'
-import {Stack} from '@chakra-ui/core'
+import {Stack} from '@chakra-ui/react'
 
 import {TimelinePostsQuery} from './__generated__/TimelinePostsQuery.graphql'
 

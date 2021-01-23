@@ -1,7 +1,7 @@
 import React from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
 import {useMutation} from 'react-relay-mutation'
-import {Box} from '@chakra-ui/core'
+import {Box} from '@chakra-ui/react'
 import {faBookmark as farBookmark} from '@fortawesome/pro-regular-svg-icons'
 import {faBookmark as fasBookmark} from '@fortawesome/pro-solid-svg-icons'
 import {

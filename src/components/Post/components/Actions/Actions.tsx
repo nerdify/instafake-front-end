@@ -2,7 +2,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {graphql, useFragment} from 'react-relay/hooks'
-import {Flex, Stack} from '@chakra-ui/core'
+import {Flex, Stack} from '@chakra-ui/react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faComment, faPaperPlane} from '@fortawesome/pro-regular-svg-icons'
 

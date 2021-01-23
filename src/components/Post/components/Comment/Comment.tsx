@@ -1,7 +1,7 @@
 /* eslint relay/must-colocate-fragment-spreads:0 */
 import React, {useMemo, useState} from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
-import {Box, Stack, Text} from '@chakra-ui/core'
+import {Box, Stack, Text} from '@chakra-ui/react'
 
 import {Comment_comment$key} from './__generated__/Comment_comment.graphql'
 

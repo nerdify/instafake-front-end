@@ -12,7 +12,7 @@ import {
   FormLabel,
   Heading,
   Textarea,
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 
 import {CreatePostCreatePostMutation} from './__generated__/CreatePostCreatePostMutation.graphql'
 

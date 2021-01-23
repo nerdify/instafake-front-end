@@ -1,6 +1,6 @@
 import React from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
-import {Avatar, Box, Flex, Heading, Stack} from '@chakra-ui/core'
+import {Avatar, Box, Flex, Heading, Stack} from '@chakra-ui/react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEllipsisH as falEllipsisH} from '@fortawesome/pro-light-svg-icons'
 

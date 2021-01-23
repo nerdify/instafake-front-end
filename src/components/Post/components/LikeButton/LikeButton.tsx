@@ -1,7 +1,7 @@
 import React from 'react'
 import {graphql, useFragment} from 'react-relay/hooks'
 import {useMutation} from 'react-relay-mutation'
-import {Box} from '@chakra-ui/core'
+import {Box} from '@chakra-ui/react'
 import {faHeart as farHeart} from '@fortawesome/pro-regular-svg-icons'
 import {faHeart as fasHeart} from '@fortawesome/pro-solid-svg-icons'
 import {

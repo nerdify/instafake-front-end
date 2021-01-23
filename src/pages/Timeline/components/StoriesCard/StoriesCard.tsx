@@ -1,5 +1,5 @@
 import React from 'react'
-import {Avatar, Box, Stack} from '@chakra-ui/core'
+import {Avatar, Box, Stack} from '@chakra-ui/react'
 
 export function StoriesCard() {
   return (

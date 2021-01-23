@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react'
-import {Center} from '@chakra-ui/core'
+import {Center} from '@chakra-ui/react'
 
 interface ArrowProps {
   children: ReactNode
