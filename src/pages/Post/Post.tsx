@@ -74,7 +74,12 @@ export function Post() {
       <Flex w="60%">
         <Gallery images={post.images} />
       </Flex>
-      <Flex flex={1} direction="column">
+      <Flex
+        border="1px solid"
+        borderColor="gray.100"
+        direction="column"
+        flex={1}
+      >
         <Header post={post} />
         <PostCommentList comments={comments} />
         <Box>
