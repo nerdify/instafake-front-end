@@ -30,11 +30,7 @@ export function CommentTextArea({post: _post}: CommentTextAreaProps) {
       createComment(input: $input) {
         commentEdge {
           node {
-            ...LikeButton_subject
-            text
-            user {
-              username
-            }
+            ...PostComment_comment
           }
         }
       }
