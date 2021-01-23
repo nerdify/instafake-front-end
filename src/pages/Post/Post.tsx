@@ -69,6 +69,7 @@ export function Post() {
       borderColor="gray.200"
       borderRadius="md"
       flex={1}
+      maxHeight="600px"
     >
       <Flex w="60%">
         <Gallery images={post.images} />
